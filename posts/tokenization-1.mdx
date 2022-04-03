@@ -1,0 +1,88 @@
+---
+title: Tokenizers
+date: March 5, 2022
+author: Aaron Chan
+description: What are tokenizers, and how are they made?
+level: 1
+topic: Natural Language Processing
+id: tokenization
+thumbnailUrl: "/javascript-functions-thumbnail.jpeg"
+tags: ["nlp", "tokenizers"]
+---
+
+When we talk, we use words. When deep learning models talk, they use numbers. After the model is done talking, then we convert the numbers into words that we can understand.
+
+<br />
+Tokenizers bridge the gap between words and numbers. A tokenizer takes a sentence
+like `I like cars` and turns into numbers like `5 8 22`. It can also take `5 8 22`
+and convert it back into `I like cars`.
+
+<br />
+How does the tokenizer know which words correspond to which numbers (or in other
+words, how do we **train** a tokenizer)? Many people have come up with strategies
+to answer this question.
+
+<br />
+For languages with alphabets (phonetic languages), the simplest answer is assign
+each letter to a number, e.g. `5` will always mean `f`. However, the point of a deep
+learning model is to learn meanings behind words, and the meaning of `f` depends
+on all the other letters, so the model will need to work extra hard to understand
+the connections between individual letters.
+
+<br />
+How about whole words, e.g. `beef` will always be `672`? That is a lot of words for
+the model to memorize. And what happens if the model sees a new word? It will have
+no idea what it means.
+
+<br />
+In short, we want to maintain a balance between having many tokens for representing
+different ideas, and not having **too** many tokens so that the model can effectively
+learn all the token meanings.
+
+<br />
+Some of the most popular strategies for tokenization are known as **Byte Pair Encoding**,
+**WordPiece**, and **SentencePiece**.
+
+## Strategy 1: Byte Pair Encoding
+
+Byte Pair Encoding (BPE) is not specifically a Deep Learning algorithm - it's a data compression algorithm since the 1990s. The gist of the Byte Pair Encoding (commonly referred to as BPE) strategy is to take consecutive letters that occur frequently and replace them with a new letter. For example, `abababc` has a lot of `ab`s in a row, so `ab` might be replaced with `Z`. The resulting compressed text would be `ZZZc` with tokens `Z, c` instead of the original `a, b, c` tokens.
+
+<br />
+BPE works well with tokenization because you can compress a big vocabulary into a
+smaller vocabulary; in fact, as small as you want it to be. Suppose you have an English
+text with 3 million words, but you want only 100,000 tokens. You can use BPE to compress
+that text until it has 100,000 unique "subwords".
+
+<br />
+In effect, what happens is that BPE breaks words into components, like `walk` and
+`ing`. The resulting tokens tend to be a natural way that we think of language, e.g.
+`surreptitiously` being broken down into `surrepti`, `tious`, and `ly`.{" "}
+
+However, BPE can have trouble when there are multiple ways to encode a word, leading
+to a single word being represented in different ways, which can be confusing for
+the model. `Headspace` could be `Heads pace` or `Head space` for example.
+
+## Strategy 2: WordPiece
+
+WordPiece is another popular tokenization method used on Google's famous BERT model. It is similar to BPE because it also breaks words down into "subwords".
+
+WordPiece starts with letters, then begins to iteratively combine the letters into subwords. The way WordPiece chooses which letters should be combined is based on what combination would lead to better model results.
+
+## Strategy 3: SentencePiece
+
+Technically SentencePiece is not a tokenization algorithm; it is some extra features on top of common tokenization strategies like BPE.
+SentencePiece handles problems like "how do we avoid multiple ways to represent the same word" (subword regularization), and "how do we handle whitespaces."
+
+## Special Tokens
+
+Lastly, most tokenizers include "special tokens" which are signals to the model rather than part of the input. Some of the most common ones are:
+
+<br />
+- `<pad>` for padding in batches (see Level 2)
+- `<s>` for separator or start of sequence
+- `<unk>` for unknown tokens
+- `</s>` for end of sequence
+- `<cls>` to signal classification, e.g. "classify everything before this"
+- `<mask>` to signal that there is input here but we're not showing the model.
+<br />
+Of course, the meanings of these special tokens must be learned during model training, just like any other tokens.
