@@ -111,17 +111,21 @@ const Home = (props: HomePageProps) => {
             </AnimateUpReveal>
             <AnimateUpReveal delay={0.7}>
               <p className="max-w-lg">
-                Hi, I'm Aaron Chan! Thanks for dropping by ☺️, stay awhile and
-                find out how I can help you, what I've been working on, and much
+                Hi, I&rsquo;m Aaron Chan! I&rsquo;m a software engineer,
+                consultant, data scientist, loyal friend, musician, and much
                 more.
               </p>
+              <br />
+              <p className="max-w-lg">
+                Thanks for dropping by ☺️, stay awhile and find out how I can
+                help you, what I&rsquo;ve been working on, and much more.
+              </p>
             </AnimateUpReveal>
-            <br />
             <br />
             <AnimateUpReveal delay={1}>
               <div className="flex mt-3">
                 <p className="max-w-lg pr-2 mt-1">
-                  Check out what I've been up to 👉
+                  Check out what I&rsquo;ve been up to 👉
                 </p>
                 <SocialIcon
                   href="https://github.com/aayc"
@@ -165,6 +169,7 @@ const Home = (props: HomePageProps) => {
                 <a
                   href="https://forms.gle/pwRjqyJNwBH3eA8NA"
                   target="_blank"
+                  rel="noopener noreferrer"
                   style={{ textDecoration: "none" }}
                   className="text-inherit focus:text-inherit visited:text-inherit hover:text-inherit"
                 >
@@ -185,7 +190,7 @@ const Home = (props: HomePageProps) => {
                 </li>
                 <br />
                 <li className="hover:underline-animation-white">
-                  I want to hear about what you're working on &rarr;
+                  I want to hear about what you&rsquo;re working on &rarr;
                 </li>
                 <br />
                 <li className="hover:underline-animation-white">

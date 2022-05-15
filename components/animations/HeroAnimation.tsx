@@ -65,7 +65,7 @@ export default function HeroAnimation() {
           <div className=" ml-6">
             <h1 className="text-xl">Aaron Chan</h1>
             <br />
-            <h5 className="text-md code">// ABOUT ME</h5>
+            <h5 className="text-md code">ABOUT ME</h5>
             <p>Lorem ipsum dolor...</p>
           </div>
         </div>
