@@ -10,9 +10,9 @@ export default function NavBar() {
       </div>
       <div>
         <NavLink href="/posts/about">about</NavLink>
-        <NavLink href="/">opinions</NavLink>
+        <NavLink href="/blog">opinions</NavLink>
         <NavLink href="/projects">projects</NavLink>
-        <NavLink href="/">contact</NavLink>
+        <NavLink href="/contact">contact</NavLink>
       </div>
       <div>
         <SearchBar></SearchBar>

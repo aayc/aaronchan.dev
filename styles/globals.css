@@ -125,6 +125,18 @@ h2 {
   @apply text-5xl;
 }
 
+h3 {
+  font-family: "radikalbold";
+  line-height: 5.4;
+  @apply text-2xl;
+}
+
+h4 {
+  font-family: "radikalregular";
+  line-height: 5.4;
+  @apply text-2xl;
+}
+
 p {
   font-family: "radikallight";
   @apply text-xl;

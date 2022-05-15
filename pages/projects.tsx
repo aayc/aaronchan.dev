@@ -9,16 +9,24 @@ function Tile() {
 
 /*
 Write articles about all of these??
-- MSFT Research
-- Tiedye
-- WhatsApp
-- Matchmaker
-- Google Foobar
-- Elon Microfinance Seed Effect
-- Paper about stroke detection - Archibald
-- Az Powershell extension release
-- NASA Project
-- MAgpie Labs project
+- MSFT Research 2x1
+- Tiedye 1x1
+    - the journey of tiedye
+- WhatsApp 1x1
+    - experience at facebook
+- Matchmaker 1x1
+    - post
+- Google Foobar 2x1
+- Elon Microfinance Seed Effect 1x1
+    - post
+- Paper about stroke detection - Archibald 2x1
+    - post
+- Az Powershell extension release 2x1
+    - just link to their post
+- NASA Project 2x1
+    - post
+- MAgpie Labs project 1x1
+    - post siamese networks
 */
 
 export default function Projects() {

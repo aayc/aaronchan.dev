@@ -15,18 +15,7 @@ import {
 } from "../components/animations/AnimationToolkit";
 import { useInterval } from "../components/Hooks";
 import Link from "next/link";
-
-type PostMetadata = {
-  title: string;
-  author: string;
-  date: string;
-  topic: string;
-  id: string;
-  tags: string[];
-  thumbnailUrl: string;
-  description: string;
-  level: number;
-};
+import { PostMetadata } from "../components/PostTypes";
 
 type HomePageProps = {
   posts: { metadata: PostMetadata; slug: string }[];
@@ -191,9 +180,11 @@ const Home = (props: HomePageProps) => {
                   I want to see your resume &rarr;
                 </li>
                 <br />
-                <li className="hover:underline-animation-white">
-                  I want to hear about what you&rsquo;re working on &rarr;
-                </li>
+                <Link href="/blog">
+                  <li className="hover:underline-animation-white">
+                    I want to hear about what you&rsquo;re working on &rarr;
+                  </li>
+                </Link>
                 <br />
                 <li className="hover:underline-animation-white">
                   I want to read your blog &rarr;
@@ -208,43 +199,22 @@ const Home = (props: HomePageProps) => {
         </div>
 
         <Footer></Footer>
-
-        {/*
-        <div className={styles.grid}>
-          {topics.map((topic) => (
-            <div key={topic} className={styles.card}>
-              <h2>{topic}</h2>
-              <ul>
-                {props.posts
-                  .filter(
-                    (post) =>
-                      post.metadata.topic === topic && post.metadata.level == 1
-                  )
-                  .map((post) => (
-                    <li key={topic + post.metadata.title}>
-                      <a href={`/${post.slug}`}>{post.metadata.title} &rarr;</a>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))}
-                  </div>*/}
       </div>
     </div>
   );
 };
 
 export const getStaticProps = async () => {
-  const files = fs.readdirSync(path.join("posts"));
+  const files = fs.readdirSync(path.join("mdx", "posts"));
   const posts = files.map((filename) => {
     const markdownWithMeta = fs.readFileSync(
-      path.join("posts", filename),
+      path.join("mdx", "posts", filename),
       "utf-8"
     );
     const { data: metadata } = matter(markdownWithMeta);
     return {
       metadata,
-      slug: path.join("posts", filename.split(".")[0]),
+      slug: path.join("mdx", "posts", filename.split(".")[0]),
     };
   });
   return {
