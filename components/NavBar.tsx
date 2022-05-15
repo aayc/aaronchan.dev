@@ -9,9 +9,9 @@ export default function NavBar() {
         <NavLink href="/">Aaron&rsquo;s Space</NavLink>
       </div>
       <div>
-        <NavLink href="/">about</NavLink>
+        <NavLink href="/posts/about">about</NavLink>
         <NavLink href="/">opinions</NavLink>
-        <NavLink href="/">projects</NavLink>
+        <NavLink href="/projects">projects</NavLink>
         <NavLink href="/">contact</NavLink>
       </div>
       <div>

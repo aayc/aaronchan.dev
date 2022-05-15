@@ -9,7 +9,7 @@ import NavBar from "../../components/NavBar";
 import styles from "../../styles/Post.module.css";
 
 export const getStaticPaths = async () => {
-  const files = fs.readdirSync(path.join("mdx", "posts"));
+  const files = fs.readdirSync(path.join("mdx", "projects"));
   const paths = files.map((filename) => ({
     params: {
       slug: filename.replace(".mdx", ""),
@@ -23,7 +23,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug } }) => {
   const markdownWithMeta = fs.readFileSync(
-    path.join("mdx", "posts", slug + ".mdx"),
+    path.join("mdx", "projects", slug + ".mdx"),
     "utf-8"
   );
   const { data: frontMatter, content } = matter(markdownWithMeta);

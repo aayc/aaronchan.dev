@@ -14,6 +14,7 @@ import {
   TransitioningText,
 } from "../components/animations/AnimationToolkit";
 import { useInterval } from "../components/Hooks";
+import Link from "next/link";
 
 type PostMetadata = {
   title: string;
@@ -77,7 +78,7 @@ const Home = (props: HomePageProps) => {
 
   useInterval(() => {
     changeHeader();
-  }, 4000);
+  }, 8000);
 
   return (
     <div>
@@ -170,7 +171,6 @@ const Home = (props: HomePageProps) => {
                   href="https://forms.gle/pwRjqyJNwBH3eA8NA"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ textDecoration: "none" }}
                   className="text-inherit focus:text-inherit visited:text-inherit hover:text-inherit"
                 >
                   <li className="hover:underline-animation-white">
@@ -178,9 +178,11 @@ const Home = (props: HomePageProps) => {
                   </li>
                 </a>
                 <br />
-                <li className="hover:underline-animation-white">
-                  I want to know more about you &rarr;
-                </li>
+                <Link href="/posts/about">
+                  <li className="hover:underline-animation-white">
+                    I want to know more about you &rarr;
+                  </li>
+                </Link>
                 <br />
                 <li
                   className="hover:underline-animation-white"
@@ -202,23 +204,6 @@ const Home = (props: HomePageProps) => {
                 </li>
               </ol>
             </div>
-
-            {/*<div className="flex justify-between">
-              <div className="w-1/2 leading-8 pr-8">
-                <p>
-                  My expertise is in software: deep learning, performance
-                  optimization, full stack web development, mobile app
-                  development, visualization, and infrastructure pipelines.
-                </p>
-                <br />
-                <p>
-                  Off the computer, I enjoy playing the piano and the cello;
-                  studying Mandarin Chinese; refining my best homecooked dishes;
-                  and practicing jiu jitsu.
-                </p>
-              </div>
-              <div className="w-1/2">Videos</div>
-</div>*/}
           </div>
         </div>
 
