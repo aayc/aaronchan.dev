@@ -6,7 +6,7 @@ export default function NavBar() {
   return (
     <div className="flex justify-between mt-8 m-auto max-w-7xl">
       <div className="w-56">
-        <NavLink href="/">New York</NavLink>
+        <NavLink href="/">Aaron's Space</NavLink>
       </div>
       <div>
         <NavLink href="/">about</NavLink>
