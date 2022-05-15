@@ -142,6 +142,11 @@ p {
   @apply text-xl;
 }
 
+.max-w-112 {
+  max-width: 32rem;
+  width: 32rem;
+}
+
 a,
 Link {
   @apply text-blue-400;
