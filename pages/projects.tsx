@@ -41,11 +41,6 @@ function Projects(props: ProjectsProps) {
     props.projects.map((_) => false)
   );
 
-  const viewProject = (index: number) => {
-    const project = props.projects[index];
-    window.open(project.slug.replace("mdx/", ""), "_blank");
-  };
-
   return (
     <div>
       <div className="m-auto max-w-7xl">
@@ -54,7 +49,8 @@ function Projects(props: ProjectsProps) {
         <div className="mt-12">
           <h2>Projects</h2>
           <p className="mt-8 text-md">
-            <i>"Whatever good things we build end up building us"</i> - Jim Rohn
+            <i>&quot;Whatever good things we build end up building us&quot;</i>{" "}
+            - Jim Rohn
           </p>
 
           {/* Build a grid of project tiles TODO Change this to grid instead of flex.. */}

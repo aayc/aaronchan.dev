@@ -64,9 +64,9 @@ function Blog(props: BlogPageProps) {
           <h2>Blog</h2>
           <p className="mt-8 text-md max-w-3xl">
             <i>
-              "That language is an instrument of human reason, and not merely a
-              medium for the expression of thought, is a truth generally
-              admitted"
+              &quot;That language is an instrument of human reason, and not
+              merely a medium for the expression of thought, is a truth
+              generally admitted&quot;
             </i>{" "}
             - George Boole
           </p>
@@ -124,7 +124,7 @@ function Blog(props: BlogPageProps) {
                   <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
                   {postsForMonth.map((post) => {
                     return (
-                      <div className="ml-8 mt-8">
+                      <div key={post.metadata.title} className="ml-8 mt-8">
                         <p className="underline transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
                           {post.metadata.title}
                         </p>
