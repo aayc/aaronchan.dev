@@ -1,10 +1,7 @@
 import NavBar from "../components/NavBar";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDiagramSuccessor,
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export default function Contact() {
   const [name, setName] = React.useState("");
@@ -15,6 +12,18 @@ export default function Contact() {
 
   const handleSubmit = () => {
     setLoading(true);
+
+    if (
+      name.length === 0 ||
+      contact.length === 0 ||
+      message.length === 0 ||
+      subject.length === 0
+    ) {
+      alert("Please fill out all forms");
+      setLoading(false);
+      return;
+    }
+
     fetch("/api/contact", {
       method: "POST",
       headers: {

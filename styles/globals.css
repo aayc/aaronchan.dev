@@ -225,3 +225,9 @@ ul {
 .code {
   font-family: Consolas;
 }
+
+@media (min-width: 200px) {
+  .mdsm\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
