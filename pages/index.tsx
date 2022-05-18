@@ -122,7 +122,7 @@ const Home = (props: HomePageProps) => {
                   icon="github"
                 ></SocialIcon>
                 <SocialIcon
-                  href="https://twitter.com"
+                  href="https://twitter.com/aaronychan"
                   icon="twitter"
                 ></SocialIcon>
                 <SocialIcon
@@ -130,7 +130,7 @@ const Home = (props: HomePageProps) => {
                   icon="linkedin"
                 ></SocialIcon>
                 <SocialIcon
-                  href="https://instagram.com"
+                  href="https://instagram.com/aaronychan"
                   icon="instagram"
                 ></SocialIcon>
               </div>
@@ -186,13 +186,17 @@ const Home = (props: HomePageProps) => {
                   </li>
                 </Link>
                 <br />
-                <li className="hover:underline-animation-white">
-                  I want to read your blog &rarr;
-                </li>
+                <Link href="/blog">
+                  <li className="hover:underline-animation-white">
+                    I want to read your blog &rarr;
+                  </li>
+                </Link>
                 <br />
-                <li className="hover:underline-animation-white">
-                  I want some advice &rarr;
-                </li>
+                <Link href="/contact">
+                  <li className="hover:underline-animation-white">
+                    I want some advice &rarr;
+                  </li>
+                </Link>
               </ol>
             </div>
           </div>

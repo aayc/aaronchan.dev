@@ -5,7 +5,30 @@ author: ""
 sortDate: "2021-05-15"
 description: "A magic dating survey - that worked!"
 id: matchmaker
-thumbnailUrl: "/img/matchmaker-logo.jpeg"
+thumbnailUrl: "/img/projects/matchmaker-logo.jpeg"
 ---
 
-Matchmaker
+Matchmaker was one of the most wild projects I've worked on. During my 5th semester at BYU, I met some students from Stanford who were doing classes remotely but near BYU (Stanford was remote, BYU is very social). They told me about a survey that happens at Stanford called the Stanford Marriage Pact; apparently it uses an algorithm to identify your "best match" and then you make a pact that if neither of you are married by the time you're 35 or something like that then you'll get married. It's mostly just for fun and I don't know if anyone's actually gotten married from it.
+
+<br />
+Well, BYU is famously marriage-happy, so we thought it would be fun to do something
+like the Stanford Marriage Pact but at BYU. We made around 50 questions ranging from
+asking about political beliefs, to ideal future family size, to whether you'd rather
+explore the deep sea or space, and spread more than 5,000 flyers around BYU campus.
+A friend and I wrote the website, and I wrote the backend infrastructure that would
+handle and process the surveys. I also wrote our matching algorithm, which essentially
+just matched people based on similarity scores for most questions and a few custom
+scores for the other questions.
+<br />
+We opened the survey for 2 weeks, had everyone take it, and then closed the survey,
+created the matches, and emailed every person exactly one match. If A matched with
+B then B also matched with A. We had to account for the imbalance between the number
+of boys and girls, sexual orientation, age ranges, and much more. More than 5,000
+students took the survey and, get this, roughly 0.5% got MARRIED. Isn't that insane?
+We specifically put on the survey, "hey this is sort of a joke and don't marry your
+match right away" but it turned out that for some people, it really was right.
+<br />I ran a second round of Matchmaker the following winter, with local company
+sponsors, a second university, and algorithm's capability to return 4 matches per
+person. It was similarly successful, but at this point I was done with the dating
+app scene and decided to move on to other projects. Matchmaker will always have a
+fond place in my heart for the rush of being a part of so many people's dating lives.

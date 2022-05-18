@@ -58,32 +58,32 @@ function Projects(props: ProjectsProps) {
             {props.projects.map((project, i) => (
               <div
                 key={project.metadata.title}
-                className="w-96 h-96 mt-8 shadow-md transition ease-in-out hover:-translate-y-1 hover:shadow-lg"
+                className="w-96 h-96 mt-8 shadow-md transition ease-in-out hover:-translate-y-1 hover:shadow-lg cursor-pointer"
                 style={{
                   backgroundImage: `url('${project.metadata.thumbnailUrl}')`,
                   backgroundSize: "contain",
                 }}
               >
-                <div className="h-full flex flex-col justify-between">
-                  <span></span>
-                  <AnimateUpReveal>
-                    <div className="bg-black p-4 text-white flex flex-row justify-between">
-                      <div>
-                        <p>{project.metadata.title}</p>
-                        <p className="text-sm mt-2">
-                          {project.metadata.description}
-                        </p>
-                      </div>
-                      <Link href={project.slug.replace("mdx/", "")}>
+                <Link href={project.slug.replace("mdx/", "")}>
+                  <div className="h-full flex flex-col justify-between">
+                    <span></span>
+                    <AnimateUpReveal>
+                      <div className="bg-black p-4 text-white flex flex-row justify-between">
+                        <div>
+                          <p>{project.metadata.title}</p>
+                          <p className="text-sm mt-2">
+                            {project.metadata.description}
+                          </p>
+                        </div>
                         <FontAwesomeIcon
                           icon={faSquareArrowUpRight}
                           className="transition ease-in-out hover:scale-110 hover:animate-pulse cursor-pointer"
                           size="2x"
                         ></FontAwesomeIcon>
-                      </Link>
-                    </div>
-                  </AnimateUpReveal>
-                </div>
+                      </div>
+                    </AnimateUpReveal>
+                  </div>
+                </Link>
               </div>
             ))}
           </div>
