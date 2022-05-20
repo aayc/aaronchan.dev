@@ -3,7 +3,42 @@ title: WhatsApp Infra
 date: "May 15th, 2022"
 sortDate: "2020-03-15"
 author: "Aaron Chan"
-description: "Winter 2020 Internship"
+description: "Measuring redundancy at scale"
 id: whatsapp
 thumbnailUrl: "/img/projects/whatsapp-logo.png"
 ---
+
+In January of 2020 I took a semester off of college and joined WhatsApp to work on WhatsApp's infrastructure. It was crazy. WhatsApp is built on this programming language named Erlang, which was originally developed for highly concurrent systems. WhatsApp is a highly concurrent system, serving over 100 BILLION messages per day.
+
+<br />
+To process all those messages reliably, WhatsApp needs an incredible fault tolerance
+strategy. WhatsApp tries not to store any user messages on any of its servers, which
+is great from a privacy perspective and incidentally is also great for performance.
+But what happens when you send a message to your friend Bob and his phone is off?
+Where does the message go? This is one of the exceptions to the rule; WhatsApp will
+store the message in its offline message storage for up to 30 days. When Bob comes
+back online, those messages will be flushed out of WhatsApp servers and delivered
+to Bob's phone.
+<br />
+However, since WhatsApp servers are written in Erlang, and one of Erlang's design
+philosophies is to plan to fail (e.g. the [chaos monkey](/posts/chaos-monkey)), what
+happens when one of WhatsApp's offline storage nodes inevitably goes down? Well,
+you pray that another node has a copy of the messages. For efficiency, WhatsApp has
+figured out how to keep redundant copies of messages strewn around its nodes. But
+because of the [CAP theorem](/posts/cap-theorem), it would have to trade message
+throughput (availability) for consistency (having all the right messages in all nodes).
+So, WhatsApp chose availability.
+<br />
+But that doesn't mean that we can't **measure** consistency in a way that doesn't
+impact availability (the measurement will just take time to propagate). And that
+was my project. I created an algorithm that percolates through WhatsApp nodes and
+measures the consistency of message storage; I learned Erlang and had to touch some
+of the most memorialized, battle-tested code in the system to get the job done because
+in order to be efficient, I had to pass light signals throughout the nodes that wouldn't
+impact network latency but would still give just enough information to create a live
+dashboard where we could see which regions were consistent and which were not.
+<br />
+Along the way, I ended up creating a framework for multi-node interactive unit testing
+(unit tests were for just one node in the infrastructure, but with my library you
+could test the interaction between nodes), strengthened recovery systems, and ultimately
+presented my work to the lead engineering director of WhatsApp.

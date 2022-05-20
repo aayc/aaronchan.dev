@@ -7,6 +7,7 @@ import matter from "gray-matter";
 import { PostMetadata } from "../components/PostTypes";
 import moment from "moment";
 import Tag from "../components/small/Tag";
+import Link from "next/link";
 type BlogPageProps = {
   posts: { metadata: PostMetadata; slug: string }[];
 };
@@ -45,6 +46,7 @@ function Blog(props: BlogPageProps) {
   const monthYears = unique(
     posts.map((x) => x.metadata.sortDate.split("-").slice(0, 2).join("-"))
   );
+  monthYears.sort().reverse();
 
   const toggleTag = (tag: string) => {
     const tagIndex = tags.indexOf(tag);
@@ -124,11 +126,16 @@ function Blog(props: BlogPageProps) {
                   <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
                   {postsForMonth.map((post) => {
                     return (
-                      <div key={post.metadata.title} className="ml-8 mt-8">
-                        <p className="underline transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
-                          {post.metadata.title}
-                        </p>
-                      </div>
+                      <Link
+                        href={`/${post.slug.replace("mdx/", "")}`}
+                        key={post.slug}
+                      >
+                        <div className="ml-8 mt-8">
+                          <p className="underline transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
+                            {post.metadata.title}
+                          </p>
+                        </div>
+                      </Link>
                     );
                   })}
                 </div>
