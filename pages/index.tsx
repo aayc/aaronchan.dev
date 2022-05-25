@@ -26,15 +26,15 @@ const Home = (props: HomePageProps) => {
 
   const viewFunFacts = () => {
     setShowFunFacts(true);
-    scrollToTop()
-  }
+    scrollToTop();
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 250,
-      behavior: "smooth"
-    })
-  }
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div>
@@ -69,24 +69,47 @@ const Home = (props: HomePageProps) => {
               </div>
               <AnimateUpReveal delay={0.7}>
                 <p className="max-w-lg text-lg">
-                  Hi! My name is Aaron Chan, and I'm all about software engineering, machine learning, travel, performing and appreciating music, cooking, and learning new things.
+                  Hi! My name is Aaron Chan, and I&rsquo;m all about software
+                  engineering, machine learning, travel, performing and
+                  appreciating music, cooking, and learning new things.
                 </p>
                 <br />
                 <p className="max-w-lg text-lg">
-                  I'm building AI models and engineering platforms with Microsoft Research to improve developer experiences all around the world.  In my spare time, I enjoy playing piano and arranging music, trying new recipes, practicing jiu jitsu, and traveling.
+                  I&rsquo;m building AI models and engineering platforms with
+                  Microsoft Research to improve developer experiences all around
+                  the world. In my spare time, I enjoy playing piano and
+                  arranging music, trying new recipes, practicing jiu jitsu, and
+                  traveling.
                 </p>
                 <AnimatePresence>
                   {showFunFacts && (
-                    <motion.div initial={{opacity: 0}} animate={{ opacity: 1}} transition={{duration: 2}} exit={{ opacity: 0}}>
-                  <p className="max-w-lg text-lg mt-8">
-                    <b>Fun facts about me:</b>
-                    <ul className="text-lg">
-                      <li>I grew up in upstate New York.</li>
-                      <li>I started programming when I was 8 with Flash Actionscript 2 (AS3 wasn't out yet).</li>
-                      <li>I love fountains and running water - when I was a kid, I used to stare at storm drains when it was raining to see the water rushing in.</li>
-                      <li>My favorite book series is the Dresden Files, followed closely by the Stormlight Archives.</li>
-                    </ul>
-                  </p></motion.div>)}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 2 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <p className="max-w-lg text-lg mt-8">
+                        <b>Fun facts about me:</b>
+                        <ul className="text-lg">
+                          <li>I grew up in upstate New York.</li>
+                          <li>
+                            I started programming when I was 8 with Flash
+                            Actionscript 2 (AS3 wasn&rsquo;t out yet).
+                          </li>
+                          <li>
+                            I love fountains and running water - when I was a
+                            kid, I used to stare at storm drains when it was
+                            raining to see the water rushing in.
+                          </li>
+                          <li>
+                            My favorite book series is the Dresden Files,
+                            followed closely by the Stormlight Archives.
+                          </li>
+                        </ul>
+                      </p>
+                    </motion.div>
+                  )}
                 </AnimatePresence>
                 <br />
               </AnimateUpReveal>
@@ -97,22 +120,22 @@ const Home = (props: HomePageProps) => {
                     Check out what I&rsquo;ve been up to 👉
                   </p>
                   <div className="mt-4 md:mt-0">
-                  <SocialIcon
-                    href="https://github.com/aayc"
-                    icon="github"
-                  ></SocialIcon>
-                  <SocialIcon
-                    href="https://twitter.com/aaronychan"
-                    icon="twitter"
-                  ></SocialIcon>
-                  <SocialIcon
-                    href="https://linkedin.com/in/aaron-y-chan"
-                    icon="linkedin"
-                  ></SocialIcon>
-                  <SocialIcon
-                    href="https://instagram.com/aaronychan"
-                    icon="instagram"
-                  ></SocialIcon>
+                    <SocialIcon
+                      href="https://github.com/aayc"
+                      icon="github"
+                    ></SocialIcon>
+                    <SocialIcon
+                      href="https://twitter.com/aaronychan"
+                      icon="twitter"
+                    ></SocialIcon>
+                    <SocialIcon
+                      href="https://linkedin.com/in/aaron-y-chan"
+                      icon="linkedin"
+                    ></SocialIcon>
+                    <SocialIcon
+                      href="https://instagram.com/aaronychan"
+                      icon="instagram"
+                    ></SocialIcon>
                   </div>
                 </div>
               </AnimateUpReveal>
@@ -139,9 +162,12 @@ const Home = (props: HomePageProps) => {
                   </li>
                 </a>
                 <br />
-                  <li onClick={viewFunFacts} className="hover:underline-animation-white">
-                    I want to know more about you &rarr;
-                  </li>
+                <li
+                  onClick={viewFunFacts}
+                  className="hover:underline-animation-white"
+                >
+                  I want to know more about you &rarr;
+                </li>
                 <br />
                 <li
                   className="hover:underline-animation-white"
