@@ -17,23 +17,16 @@ import { AnimateUpReveal } from "../components/animations/AnimationToolkit";
 import Link from "next/link";
 import Footer from "../components/Footer";
 
-function Tile() {
-  const [isHovering, setIsHovering] = useState(false);
-  return <div className="flex flex-col justify-center items-center"></div>;
-}
-
 type ProjectsProps = {
   projects: { metadata: PostMetadata; slug: string }[];
 };
 
 /*
-Write articles about all of these??
-- Paper about stroke detection - Archibald 2x1
-    - post
-- Az Powershell extension release 2x1
-    - just link to their post
-- MAgpie Labs project 1x1
-    - post siamese networks
+  Write articles about all of these??
+  - Paper about stroke detection - Archibald 2x1
+      - post
+  - MAgpie Labs project 1x1
+      - post siamese networks
 */
 
 function Projects(props: ProjectsProps) {

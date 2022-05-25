@@ -10,7 +10,7 @@ export default function NavBar() {
       </div>
       <div>
         {/*<NavLink href="/posts/about">about</NavLink>*/}
-        <NavLink href="/blog">opinions</NavLink>
+        <NavLink href="/blog">blog</NavLink>
         <NavLink href="/projects">projects</NavLink>
         <NavLink href="/contact">contact</NavLink>
       </div>

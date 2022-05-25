@@ -8,6 +8,8 @@ import { PostMetadata } from "../components/PostTypes";
 import moment from "moment";
 import Tag from "../components/small/Tag";
 import Link from "next/link";
+import Dropdown from "../components/Dropdown";
+import MultipleSelect from "../components/MultipleSelect";
 type BlogPageProps = {
   posts: { metadata: PostMetadata; slug: string }[];
 };
@@ -57,6 +59,8 @@ function Blog(props: BlogPageProps) {
     ]);
   };
 
+  const filterByTopic = (topic: string) => {};
+
   return (
     <div>
       <NavBar></NavBar>
@@ -73,7 +77,14 @@ function Blog(props: BlogPageProps) {
           </p>
         </div>
 
+        {/*
         <div className="mt-12 flex">
+          <MultipleSelect placeholder="By Topic" options={topics} onChange={filterByTopic} />
+          <MultipleSelect className="ml-2" placeholder="By Tag" options={topics} onChange={filterByTopic} />
+          <MultipleSelect className="ml-2" placeholder="By Year" options={topics} onChange={filterByTopic} />
+        </div>
+
+        <div className="mt-12">
           <div
             className="md:max-w-2xl shadow-md p-8 min-w-fit"
             style={{ minWidth: 300 }}
@@ -112,35 +123,34 @@ function Blog(props: BlogPageProps) {
                 ></Tag>
               ))}
             </div>
-          </div>
-          <div className="mx-24 max-w-2xl">
-            {monthYears.map((monthYear) => {
-              const postsForMonth = posts.filter(
-                (x) =>
-                  x.metadata.sortDate.split("-").slice(0, 2).join("-") ===
-                  monthYear
-              );
-              return (
-                <div key={monthYear} className="flex flex-col mb-12">
-                  <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
-                  {postsForMonth.map((post) => {
-                    return (
-                      <Link
-                        href={`/${post.slug.replace("mdx/", "")}`}
-                        key={post.slug}
-                      >
-                        <div className="ml-8 mt-8">
-                          <p className="underline transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
-                            {post.metadata.title}
-                          </p>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
+              </div>*/}
+        <div className="mt-12">
+          {monthYears.map((monthYear) => {
+            const postsForMonth = posts.filter(
+              (x) =>
+                x.metadata.sortDate.split("-").slice(0, 2).join("-") ===
+                monthYear
+            );
+            return (
+              <div key={monthYear} className="flex flex-col mb-12">
+                <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
+                {postsForMonth.map((post) => {
+                  return (
+                    <Link
+                      href={`/${post.slug.replace("mdx/", "")}`}
+                      key={post.slug}
+                    >
+                      <div className="ml-8 mt-8">
+                        <p className="underline transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
+                          {post.metadata.title}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
