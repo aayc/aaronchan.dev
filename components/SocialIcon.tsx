@@ -9,6 +9,7 @@ import {
 
 type SocialIconProps = {
   href: string;
+  className?: string;
   icon: "github" | "linkedin" | "twitter" | "instagram";
 };
 
@@ -41,7 +42,7 @@ export default function SocialIcon(props: SocialIconProps) {
       : "hover:text-black";
 
   return (
-    <div className="pb-2">
+    <div className={`pb-2 inline-block ${props.className ?? ""}`}>
       <a href={props.href}>
         <FontAwesomeIcon
           className={`rounded-full w-12 h-16 cursor-pointer transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 ${colorToUse} ${hoverColorToUse}`}

@@ -61,12 +61,12 @@ export default function Contact() {
         <NavBar></NavBar>
 
         <div className="mt-12">
-          <div className="mt-12 max-w-112 m-auto flex flex-col items-center">
+          <div className="mt-12 px-6 md:px-0 md:max-w-112 m-auto flex flex-col items-center">
             <h2>Contact Me</h2>
             <br />
             <br />
             <input
-              className="block rounded-lg bg-gray-100 p-3 max-w-112"
+              className="block rounded-lg bg-gray-100 p-3 w-full md:max-w-112"
               type="text"
               value={name}
               disabled={loading}
@@ -111,6 +111,7 @@ export default function Contact() {
                 <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
               </button>
             </div>
+            <br />
           </div>
         </div>
       </div>

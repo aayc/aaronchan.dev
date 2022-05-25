@@ -21,53 +21,20 @@ type HomePageProps = {
   posts: { metadata: PostMetadata; slug: string }[];
 };
 
-const getRandomInt = (max: number, dontMatch: number) => {
-  let result: number = 0;
-  do {
-    result = Math.floor(Math.random() * Math.floor(max));
-  } while (result == dontMatch);
-  return result;
-};
-
 const Home = (props: HomePageProps) => {
-  const topics = [...new Set(props.posts.map((x) => x.metadata.topic))];
-  const actions = [
-    "Building",
-    "Learning",
-    "Designing",
-    "Solving",
-    "Discovering",
-    "Sharing",
-    "Making",
-  ];
-  const descriptors = [
-    "for fun",
-    "new",
-    "exciting",
-    "just 'cause",
-    "to understand",
-    "profound",
-    "interesting",
-  ];
+  const [showFunFacts, setShowFunFacts] = useState(false);
 
-  const [indexes, setIndexes] = useState({
-    actionIndex: 0,
-    descriptorIndex: 0,
-  });
+  const viewFunFacts = () => {
+    setShowFunFacts(true);
+    scrollToTop()
+  }
 
-  const changeHeader = () => {
-    setIndexes({
-      actionIndex: getRandomInt(actions.length, indexes.actionIndex),
-      descriptorIndex: getRandomInt(
-        descriptors.length,
-        indexes.descriptorIndex
-      ),
-    });
-  };
-
-  useInterval(() => {
-    changeHeader();
-  }, 8000);
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 250,
+      behavior: "smooth"
+    })
+  }
 
   return (
     <div>
@@ -81,71 +48,76 @@ const Home = (props: HomePageProps) => {
         <NavBar></NavBar>
       </AnimateUpReveal>
 
-      <div className="mt-8">
-        <div className="flex justify-between max-w-7xl m-auto w-full py-24">
-          <div className="w-50">
-            <h1>
-              <TransitioningText
-                text={actions[indexes.actionIndex]}
-                key={"action" + indexes.actionIndex}
-              />
-              <AnimateUpReveal>something </AnimateUpReveal>
-              <TransitioningText
-                text={descriptors[indexes.descriptorIndex] + "."}
-                key={"descriptor" + indexes.descriptorIndex}
-              />
-            </h1>
-            <br />
-            <AnimateUpReveal delay={0.5}>
-              <hr className="w-6 h-1 mr-3 mt-3 mb-6 bg-black text-black"></hr>
-            </AnimateUpReveal>
-            <AnimateUpReveal delay={0.7}>
-              <p className="max-w-lg">
-                Hi, I&rsquo;m Aaron Chan! I&rsquo;m a software engineer,
-                consultant, data scientist, loyal friend, musician, and much
-                more.
-              </p>
-              <br />
-              <p className="max-w-lg">
-                Thanks for dropping by ☺️, stay awhile and find out how I can
-                help you, what I&rsquo;ve been working on, and much more.
-              </p>
-            </AnimateUpReveal>
-            <br />
-            <AnimateUpReveal delay={1}>
-              <div className="flex mt-3">
-                <p className="max-w-lg pr-2 mt-1">
-                  Check out what I&rsquo;ve been up to 👉
-                </p>
-                <SocialIcon
-                  href="https://github.com/aayc"
-                  icon="github"
-                ></SocialIcon>
-                <SocialIcon
-                  href="https://twitter.com/aaronychan"
-                  icon="twitter"
-                ></SocialIcon>
-                <SocialIcon
-                  href="https://linkedin.com/in/aaron-y-chan"
-                  icon="linkedin"
-                ></SocialIcon>
-                <SocialIcon
-                  href="https://instagram.com/aaronychan"
-                  icon="instagram"
-                ></SocialIcon>
-              </div>
-            </AnimateUpReveal>
-          </div>
+      <div className="mt-20">
+        <div className="px-4 md:px-0">
           <AnimateUpReveal>
-            <div className="w-50 mt-8">
+            <div className="flex justify-center">
               <Image
                 className="rounded-full"
-                src={"/profile.jpg"}
-                width={400}
-                height={400}
+                src={"/profile2.jpeg"}
+                width={200}
+                height={200}
               ></Image>
             </div>
           </AnimateUpReveal>
+          <div className="flex justify-center m-auto py-12">
+            <div className="">
+              <div className="flex justify-center">
+                <AnimateUpReveal delay={0.5}>
+                  <hr className="w-6 h-1 mr-3 mb-6 bg-black text-black"></hr>
+                </AnimateUpReveal>
+              </div>
+              <AnimateUpReveal delay={0.7}>
+                <p className="max-w-lg text-lg">
+                  Hi! My name is Aaron Chan, and I'm all about software engineering, machine learning, travel, performing and appreciating music, cooking, and learning new things.
+                </p>
+                <br />
+                <p className="max-w-lg text-lg">
+                  I'm building AI models and engineering platforms with Microsoft Research to improve developer experiences all around the world.  In my spare time, I enjoy playing piano and arranging music, trying new recipes, practicing jiu jitsu, and traveling.
+                </p>
+                <AnimatePresence>
+                  {showFunFacts && (
+                    <motion.div initial={{opacity: 0}} animate={{ opacity: 1}} transition={{duration: 2}} exit={{ opacity: 0}}>
+                  <p className="max-w-lg text-lg mt-8">
+                    <b>Fun facts about me:</b>
+                    <ul className="text-lg">
+                      <li>I grew up in upstate New York.</li>
+                      <li>I started programming when I was 8 with Flash Actionscript 2 (AS3 wasn't out yet).</li>
+                      <li>I love fountains and running water - when I was a kid, I used to stare at storm drains when it was raining to see the water rushing in.</li>
+                      <li>My favorite book series is the Dresden Files, followed closely by the Stormlight Archives.</li>
+                    </ul>
+                  </p></motion.div>)}
+                </AnimatePresence>
+                <br />
+              </AnimateUpReveal>
+              <br />
+              <AnimateUpReveal delay={1}>
+                <div className="flex flex-col md:flex-row mt-3">
+                  <p className="max-w-lg pr-2 mt-1 text-lg">
+                    Check out what I&rsquo;ve been up to 👉
+                  </p>
+                  <div className="mt-4 md:mt-0">
+                  <SocialIcon
+                    href="https://github.com/aayc"
+                    icon="github"
+                  ></SocialIcon>
+                  <SocialIcon
+                    href="https://twitter.com/aaronychan"
+                    icon="twitter"
+                  ></SocialIcon>
+                  <SocialIcon
+                    href="https://linkedin.com/in/aaron-y-chan"
+                    icon="linkedin"
+                  ></SocialIcon>
+                  <SocialIcon
+                    href="https://instagram.com/aaronychan"
+                    icon="instagram"
+                  ></SocialIcon>
+                  </div>
+                </div>
+              </AnimateUpReveal>
+            </div>
+          </div>
         </div>
 
         {/*<code className={styles.code}>pages/index.tsx</code>*/}
@@ -155,7 +127,7 @@ const Home = (props: HomePageProps) => {
             <h2 className="text-center">What brings you here?</h2>
             <br />
             <div className="m-auto flex justify-center mt-8">
-              <ol type="1" className="columns-2 text-xl">
+              <ol type="1" className="md:columns-2 text-xl">
                 <a
                   href="https://forms.gle/pwRjqyJNwBH3eA8NA"
                   target="_blank"
@@ -167,22 +139,20 @@ const Home = (props: HomePageProps) => {
                   </li>
                 </a>
                 <br />
-                <Link href="/posts/about">
-                  <li className="hover:underline-animation-white">
+                  <li onClick={viewFunFacts} className="hover:underline-animation-white">
                     I want to know more about you &rarr;
                   </li>
-                </Link>
                 <br />
                 <li
                   className="hover:underline-animation-white"
                   onClick={() => window.open("/resume.pdf")}
                 >
-                  I want to see your resume &rarr;
+                  I want to view your resume &rarr;
                 </li>
                 <br />
-                <Link href="/blog">
+                <Link href="/projects">
                   <li className="hover:underline-animation-white">
-                    I want to hear about what you&rsquo;re working on &rarr;
+                    I want to see what you&rsquo;ve worked on &rarr;
                   </li>
                 </Link>
                 <br />

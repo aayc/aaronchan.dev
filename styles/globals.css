@@ -142,10 +142,6 @@ p {
   @apply text-xl;
 }
 
-.max-w-112 {
-  max-width: 32rem;
-  width: 32rem;
-}
 
 a,
 Link {
@@ -224,6 +220,18 @@ ul {
 
 .code {
   font-family: Consolas;
+}
+
+.max-w-112 {
+  max-width: 32rem;
+  width: 32rem;
+}
+
+@media (min-width: 768px) {
+  .md\:max-w-112 {
+    max-width: 32rem;
+    width: 32rem;
+  }
 }
 
 @media (min-width: 200px) {

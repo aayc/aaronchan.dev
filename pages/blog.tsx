@@ -59,12 +59,11 @@ function Blog(props: BlogPageProps) {
 
   return (
     <div>
-      <div className="m-auto max-w-7xl">
-        <NavBar></NavBar>
-
+      <NavBar></NavBar>
+      <div className="m-auto max-w-7xl px-4">
         <div className="mt-12">
           <h2>Blog</h2>
-          <p className="mt-8 text-md max-w-3xl">
+          <p className="mt-8 text-md max-w-4xl">
             <i>
               &quot;That language is an instrument of human reason, and not
               merely a medium for the expression of thought, is a truth
