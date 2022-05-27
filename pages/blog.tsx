@@ -136,7 +136,7 @@ function Blog(props: BlogPageProps) {
                 <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
                 {postsForMonth.map((post) => {
                   return (
-                    <div className="inline">
+                    <div className="inline" key={post.slug}>
                       <Link
                         href={`/${post.slug.replace("mdx/", "")}`}
                         key={post.slug}
