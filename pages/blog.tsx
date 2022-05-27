@@ -132,20 +132,20 @@ function Blog(props: BlogPageProps) {
                 monthYear
             );
             return (
-              <div key={monthYear} className="flex flex-col mb-12">
+              <div key={monthYear} className="flex flex-col mb-10">
                 <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
                 {postsForMonth.map((post) => {
                   return (
-                    <Link
-                      href={`/${post.slug.replace("mdx/", "")}`}
-                      key={post.slug}
-                    >
-                      <div className="ml-8 mt-8">
-                        <p className="underline transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
-                          {post.metadata.title}
-                        </p>
-                      </div>
-                    </Link>
+                    <div className="inline">
+                      <Link
+                        href={`/${post.slug.replace("mdx/", "")}`}
+                        key={post.slug}
+                      >
+                        <span className="ml-8 mt-4 inline-block transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
+                          <b>-</b> {post.metadata.title}
+                        </span>
+                      </Link>
+                    </div>
                   );
                 })}
               </div>
