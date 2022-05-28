@@ -49,8 +49,7 @@ const PostPage = ({
           <h1 className="mt-8 text-center">{title}</h1>
           <p className="mt-2 text-center">
             <i>
-              {author}
-              {date == "" ? "" : ", " + date}
+              {date == "" ? "" : date}
             </i>
           </p>
           <p className="mt-2 text-center">
