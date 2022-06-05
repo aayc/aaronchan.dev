@@ -32,7 +32,7 @@ export default function Contact() {
       body: JSON.stringify({
         name: name,
         contact: contact,
-        message: message,
+        body: message,
         subject: subject,
       }),
     })

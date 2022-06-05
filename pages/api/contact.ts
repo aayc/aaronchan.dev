@@ -15,7 +15,7 @@ export default async function handler(
         const { name, contact, subject, body } = req.body
         try {
             await sendEmail(
-                `${name} aaronchan.dev contact form from ${contact}`,
+                `CONTACT FORM: ${name} (${contact})`,
                 'aaron.y.chan64@gmail.com',
                 `${subject}`,
                 `<p>${body}</p>`
