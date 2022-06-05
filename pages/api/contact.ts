@@ -14,10 +14,11 @@ export default async function handler(
     if (req.method === 'POST') {
         const { name, contact, subject, body } = req.body
         try {
+            console.log(name, contact, "are the name and contact")
             await sendEmail(
-                `CONTACT FORM: ${name} (${contact})`,
+                "Assistant",
                 'aaron.y.chan64@gmail.com',
-                `${subject}`,
+                `${subject} (CONTACT from ${name} (${contact}))`,
                 `<p>${body}</p>`
             )
             res.status(200).json({ success: true, message: "" })

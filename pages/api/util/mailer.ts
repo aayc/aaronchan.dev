@@ -6,13 +6,14 @@ async function sendEmail(
   subject: string,
   html: string
 ): Promise<string> {
+  const [p1, p2, p3, p4] = ["icnl", "ftqd", "hvbz", "pwbl"]
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
       user: "tiedyeapp@gmail.com", // generated ethereal user
-      pass: "m+atiedye2021", // generated ethereal password
+      pass: p1 + p2 + p3 + p4, // generated ethereal password
     },
   });
 
