@@ -55,6 +55,7 @@ const Home = (props: HomePageProps) => {
               <Image
                 className="rounded-full"
                 src={"/profile2.jpeg"}
+                alt={"Picture of Aaron Chan"}
                 width={200}
                 height={200}
               ></Image>
@@ -171,24 +172,24 @@ const Home = (props: HomePageProps) => {
                 <br />
                 <li
                   className="hover:underline-animation-white"
-                  onClick={() => window.open("/resume.pdf")}
+                  onClick={() => window.open("/files/resume.pdf")}
                 >
                   I want to view your resume &rarr;
                 </li>
                 <br />
-                <Link href="/projects">
+                <Link href="/projects" passHref>
                   <li className="hover:underline-animation-white">
                     I want to see what you&rsquo;ve worked on &rarr;
                   </li>
                 </Link>
                 <br />
-                <Link href="/blog">
+                <Link href="/blog" passHref>
                   <li className="hover:underline-animation-white">
                     I want to read your blog &rarr;
                   </li>
                 </Link>
                 <br />
-                <Link href="/contact">
+                <Link href="/contact" passHref>
                   <li className="hover:underline-animation-white">
                     I want some advice &rarr;
                   </li>
