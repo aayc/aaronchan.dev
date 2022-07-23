@@ -40,8 +40,8 @@ const Home = (props: HomePageProps) => {
     <div>
       <Head>
         <title>Aaron Chan</title>
-        <meta name="description" content="Learn Deep Learning Simply" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Personal Website of Aaron Chan" />
+        {/*<link rel="icon" href="/favicon.ico" />*/}
       </Head>
 
       <AnimateUpReveal>
