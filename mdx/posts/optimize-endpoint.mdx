@@ -1,0 +1,20 @@
+---
+title: Tips for Faster Inference on PyTorch Model Endpoints
+date: August 13th, 2022
+author: Aaron Chan
+description: ""
+sortDate: "2022-08-13"
+level: 1
+topic: Machine Learning
+id: optimizing_endpoints
+tags: ["machine learning"]
+---
+
+So you've deployed your ML model on an endpoint for inference. What can you do to speed it up?
+
+* Implement dynamic batching: if you have 5 people making requests to your endpoint, take all 5 requests and run inference on them as a batch, then split the batch results when returning responses to each of the 5 people.
+* Use PyTorch libraries for inference speedup: Pytorch 1.12 came out with [inference speedups especially for Transformers](https://pytorch.org/blog/a-better-transformer-for-fast-transformer-encoder-inference/), Pytorch Lightning has documentation on [reducing inference time in production](https://pytorch-lightning.readthedocs.io/en/1.5.8/common/production_inference.html).
+* Try ONNX Runtime: Microsoft maintains a set of python libraries (`onnx`, `onnxruntime` or `onnxruntime-gpu`) for converting a PyTorch model to ONNX format (which is then portable on any device that supports the ONNX runtime).  ONNX can provide significant speedups on CPU inference time. If you want to take a closer look at your model, you can use a library like Netron to visualize the model graph and see what operations are being performed.
+* ONNX runtime TensorRT: if your GPU supports TensorRT (e.g. NVIDIA V100, GPUs with tensor cores available), you can drop in the TensorRT Execution Environment to get a significant speedup since tensor cores can process 2x the number of fp16 operations compared to a regular GPU.
+* Quantization: PyTorch supports quantization, as does ONNX. Quantization can reduce the size of your model and also speed up inference time by changing the types of the weights from e.g. fp32 to fp16 or even int8. There are multiple types of quantization - the easiest is dynamic quantization a.k.a. quantization after the model is trained. Unfortunately, quantization after training can affect model performance in terms of precision/recall, etc. If you want to quantize your model before training, you can use [PyTorch's quantization-aware training](https://pytorch.org/tutorials/advanced/static_quantization_tutorial.html) to train your model with quantization in mind. This will give you the best performance, but it's also the most difficult to implement.
+* Distillation: Try reducing the model size by using a distillation loss. A simple way to get started though is to just try training with a smaller architecture e.g. DistilBERT instead of BERT. Or, you could even just delete layers off of your model and retrain to get a rough idea of what performance you can achieve with a smaller model.  Make sure to try inference time with the smaller model to see if it's sufficiently faster. With classifier models, studies have shown that the model's earliest layers often have the necessary information to make a classification.
