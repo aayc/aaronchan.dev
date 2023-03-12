@@ -1,7 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import NavBar from "../../components/NavBar";
-// Use firebase auth hook
 import LoginForm from "../../components/LoginForm"
 import { auth } from "../../utils/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -22,12 +20,13 @@ function Admin() {
 
 function AdminHome() {
     const [user, loading, error] = useAuthState(auth);
-
     const widget = () => {
         if (loading) {
             return <div>Loading...</div>
         } else if (user) {
             return Admin()
+        } else if (error) {
+            return <div>Error: {error.message}</div>
         } else {
             return <LoginForm></LoginForm>
         }
