@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDatabase, ref, set, get } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,5 +17,24 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const database = getDatabase(app);
 
-export { auth };
+function dbSet(loc: string, value: any): Promise<void> {
+    return set(ref(database, loc), value);
+}
+
+async function dbGet(loc: string): Promise<any | null> {
+    try {
+        const snapshot = await get(ref(database, loc))
+        if (snapshot.exists()) {
+            return snapshot.val();
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(error);
+        return null
+    }
+}
+
+export { auth, database, dbGet, dbSet};
