@@ -1,0 +1,25 @@
+---
+title: Recent LLaMA Models
+date: May 5th, 2023
+author: Aaron Chan
+description: ""
+sortDate: "2023-05-05"
+level: 1
+topic: Machine Learning
+id: optimizing_endpoints
+tags: ["machine learning"]
+---
+
+In February 2023, [LLaMA](https://github.com/facebookresearch/llama) was released. It is a foundational large language model (LLM) in 7B, 13B, 65B and other sizes from Meta AI. Due to training on many more tokens like the Chinchilla model, the 13B version is
+competitive with GPT 3 (175B parameters), and 65B is comparable with PaLM. Its input context length is 512 tokens.
+
+<br />
+By March 2023, a team from Stanford released [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). It finetunes the LLaMA model with 52K of instruction based data. It requires roughly 112GB of VRAM to finetune, but can be reduced to 28GB with LoRA.
+Although its performance is worse than ChatGPT, it has better availability because the full weights can be recovered using the weight application script from the repository, the original LLaMA weights, and the Alpaca weight diff.
+
+<br />
+Soon after, [Alpaca LoRA](https://github.com/tloen/alpaca-lora) was released. It uses the [PEFT](https://github.com/huggingface/peft) (Parameter Efficient Finetuning) codebase to finetune LLaMA with a single RTX 4090 in a matter of hours. It produces comparable outputs to Alpaca.
+
+<br />
+In April 2023, LMSYS produced [Vicuna 13B](https://lmsys.org/blog/2023-03-30-vicuna/) by finetuning LLaMA on [ShareGPT](https://sharegpt.com) data. It doesn't yet have the LoRA optimization but because of several improvements like data cleaning, accounting for multi round conversations, etc.,
+it produces better outputs than Alpaca. It is also cheaper to finetune at $300. Some say it has 90% of the performance of ChatGPT. Notably, it increases context length to 2048 tokens.

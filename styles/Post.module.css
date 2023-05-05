@@ -1,15 +1,22 @@
 .post h1 {
-  @apply text-5xl;
+  @apply text-3xl;
+  @apply font-normal;
 }
 
 .post h2 {
-  @apply text-3xl;
+  @apply text-2xl;
   @apply pt-10;
   @apply pb-6;
 }
 
 .post p {
-  @apply text-xl;
+  @apply text-lg;
+  @apply font-normal;
+}
+.post li { 
+  @apply text-lg;
+  @apply pb-6;
+  @apply font-normal;
 }
 
 .post code {
