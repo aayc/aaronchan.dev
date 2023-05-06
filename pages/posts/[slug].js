@@ -37,6 +37,13 @@ export const getStaticProps = async ({ params: { slug } }) => {
   };
 };
 
+function code({className, ...props}) {
+  const match = /language-(\w+)/.exec(className || '')
+  return match
+    ? <SyntaxHighlighter language={match[1]} PreTag="div" {...props} />
+    : <code className={className} {...props} />
+}
+
 const PostPage = ({
   frontMatter: { title, author, date, description, tags },
   mdxSource,
@@ -54,7 +61,7 @@ const PostPage = ({
             <i>{description}</i>
           </p>
           <div className={`my-8`}>
-            <MDXRemote {...mdxSource} components={{ SyntaxHighlighter }} />
+            <MDXRemote {...mdxSource} components={{ code }} />
           </div>
         </div>
       </div>

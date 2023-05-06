@@ -1,0 +1,90 @@
+---
+title: Finetuning Alpaca Lora
+date: May 6th, 2023
+author: Aaron Chan
+description: ""
+sortDate: "2023-05-06"
+level: 1
+topic: Machine Learning
+id: finetuning_alpaca_lora
+tags: ["machine learning", "llm", "finetune"]
+---
+
+Steps to finetuning Alpaca on your own data on preferably RTX 3080+, RTX 4080+, or Nvidia P100+ GPUs on Linux.
+
+<br />
+Install Miniconda. If you have no GUI, simply wget the miniconda installation script and run it. Create a new conda environment with Python 3.9.16 like so:
+```language-bash
+conda create -n alpaca python=3.9.16
+```
+<br />
+
+Clone the Alpaca Lora repository.
+```language-bash
+git clone https://github.com/tloen/alpaca-lora
+```
+<br />
+
+Install the requirements.
+```language-bash
+cd alpaca-lora
+ pip install -r requirements.txt
+```
+<br />
+
+You may need to install NVIDIA drivers. Let's check by running `torch.cuda.is_available()`
+```language-bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+If it returns True, you're good to go. If not, you'll need to install NVIDIA drivers. On ubuntu, you can find out what recommended drivers are via this command (might need to install `ubuntu-drivers-common` first):
+<br />
+```language-bash
+ubuntu-drivers
+```
+<br />
+
+Install the recommended drivers. For example, if the recommended driver is `nvidia-driver-470`, you can install it like so:
+```language-bash
+sudo apt install nvidia-driver-470
+```
+Reboot the computer.
+
+<br />
+Now you should be able to run this command as-is. 
+```language-bash
+python finetune.py --base_model 'decapoda-research/llama-7b-hf' --data_path 'yahma/alpaca-cleaned' --output_dir './lora-alpaca'
+```
+
+<br />
+If you get an error that has to do with `undefined symbol: cget_col_row_stats`, go to your equivalent of `/home/ubuntu/miniconda3/envs/lora/lib/python3.10/site-packages/bitsandbytes/` and replace the `libbitsandbytes_cpu.so` with `libbitsandbytes_cuda117_nocublaslt.so` like this:
+```language-bash
+cd /home/ubuntu/miniconda3/envs/lora/lib/python3.10/site-packages/bitsandbytes/
+ cp libbitsandbytes_cuda117_nocublaslt.so libbitsandbytes_cpu.so
+```
+
+If you get an error that has to do with Half data types, replace the `main` function in finetune.py like this:
+```language-python
+if __name__ == "__main__":
+    with torch.autocast("cuda"): # This prevents the Half data type error
+        fire.Fire(train)
+```
+
+## Using your own data
+
+All you need to do to create your own dataset is make a JSON file with an array of objects where each object has the following fields, like this:
+```language-javascript
+[{
+    "instruction": "Summarize the text",
+    "input": "<your text>",
+    "output": "<your summary>"
+ }, {
+    "instruction": "Translate from English to French",
+    "input": "<your text>",
+    "output": "<your translation>"
+ }, ...etc.]
+```
+<br />
+Then run your finetuning job like this:
+```language-bash
+python finetune.py --base_model 'decapoda-research/llama-7b-hf' --data_path '<path-to-your-json-file>' --output_dir './lora-alpaca'
+```
