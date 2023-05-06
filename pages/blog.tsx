@@ -67,14 +67,6 @@ function Blog(props: BlogPageProps) {
       <div className="m-auto max-w-7xl px-4">
         <div className="mt-12">
           <h2>Blog</h2>
-          <p className="mt-8 text-md max-w-4xl">
-            <i>
-              &quot;That language is an instrument of human reason, and not
-              merely a medium for the expression of thought, is a truth
-              generally admitted&quot;
-            </i>{" "}
-            - George Boole
-          </p>
         </div>
 
         {/*
@@ -139,6 +131,7 @@ function Blog(props: BlogPageProps) {
                     <div className="inline" key={post.slug}>
                       <Link
                         href={`/${post.slug.replace("mdx/", "")}`}
+                        passHref={true}
                         key={post.slug}
                       >
                         <span className="ml-8 mt-4 inline-block transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
