@@ -1,0 +1,24 @@
+---
+title: Accessing localhost on a remote machine
+date: May 13th, 2023
+author: Aaron Chan
+description: ""
+sortDate: "2023-05-13"
+level: 1
+topic: "SSH" 
+id: ssh_tunneling
+tags: ["ssh"]
+---
+
+Suppose you're writing a server on a remote machine that you've logged into via ssh.
+
+On your remote machine, you start your server and see that the terminal confirms it's running on localhost:3030, but you can't see it by going to localhost:3030 on your local machine's browser. This is because your server is accessible through localhost on the remote machine, not your local machine's localhost. Thus, you need to forward the port to your local machine.
+
+You can do that by running the following command on your local machine:
+
+```bash
+ssh -L <WHATEVER_PORT>:localhost:3030 <username>@<remote-machine>
+```
+
+This will forward the port on your local machine to the remote machine's port 3030. Now, you can access the server by going to localhost:<WHATEVER_PORT> on your local machine's browser.
+
