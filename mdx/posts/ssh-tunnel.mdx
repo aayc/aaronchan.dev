@@ -17,8 +17,8 @@ On your remote machine, you start your server and see that the terminal confirms
 You can do that by running the following command on your local machine:
 
 ```bash
-ssh -L <WHATEVER_PORT>:localhost:3030 <username>@<remote-machine>
+ssh -L 9090:localhost:3030 <username>@<remote-machine>
 ```
 
-This will forward the port on your local machine to the remote machine's port 3030. Now, you can access the server by going to localhost:<WHATEVER_PORT> on your local machine's browser.
+This will forward the 9090 port on your local machine to the remote machine's port 3030. Now, you can access the server by going to localhost:9090 on your local machine's browser.
 
