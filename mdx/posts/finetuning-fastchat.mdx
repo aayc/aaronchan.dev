@@ -1,0 +1,115 @@
+---
+title: Finetuning FastChat (LLaMA 7B)
+date: May 16th, 2023
+author: Aaron Chan
+description: ""
+sortDate: "2023-05-16"
+level: 1
+topic: Machine Learning
+id: finetuning_fastchat
+tags: ["machine learning", "llm", "finetune"]
+---
+
+FastChat is essentially LLaMA 7B finetuned on ShareGPT dataset.  Instead of ShareGPT, you can finetune it on whatever textual data you'd like.
+
+## Data
+
+First, you need to create a dataset. Clone the [FastChat]() repository and look at `fastchat/playground/data/dummy.json`. You'll need to use the `human` and `gpt` roles exactly, but you can see that it's straightforward to format your textual data in their json format.
+
+## Finetuning
+
+To fineteune this on consumer grade hardware, e.g. GPUs with less than 16GB of VRAM, you will need to use DeepSpeed or PEFT. Unfortunately, as of May 16th, 2023, PEFT is not supported due to weird FDSP issues. We'll use deepspeed.
+
+<br />
+One of the major selling points of DeepSpeed is that you can use it without making code changes. However, you do need to setup a config. Here's mine:
+
+<br />
+
+```
+{
+    "zero_optimization": {
+        "stage": 3,
+        "contiguous_gradients": true,
+        "stage3_max_live_parameters": 1e9,
+        "stage3_max_reuse_distance": 1e9,
+        "stage3_prefetch_bucket_size": 1e7,
+        "stage3_param_persistence_threshold": 1e5,
+        "reduce_bucket_size": 1e7,
+        "sub_group_size": 1e9,
+        "offload_optimizer": {
+            "device": "cpu"
+         }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "params": {
+            "lr": "auto",
+            "betas": "auto",
+            "eps": 1e-8,
+            "weight_decay": "auto"
+        }
+    },
+    "train_micro_batch_size_per_gpu": 1,
+    "fp16": {
+        "enabled": true,
+        "loss_scale": 0,
+        "loss_scale_window": 1000,
+        "initial_scale_power": 16,
+        "hysteresis": 2,
+        "min_loss_scale": 1
+    }
+}
+```
+
+<br />
+Notice that I'm using the ZeRO optimizer at stage 3. The ZeRO optimizer is one of DeepSpeed's many memory optimizations. There are three stages:
+<br />
+The first stage essentially splits the optimizer state across GPUs, which saves some VRAM since the optimizer state can be huge if the model has a lot of parameters.
+
+<br />
+The second stage uses data parallelism to reduce the memory footprint of the model - frankly I'm not sure how this works and the documentation is a bit vague.
+
+<br />
+The third stage allows you to offload memory onto the CPU, which is what you see in the configuration above. This provides major memory savings and is necessary for the 7B model on lower grade hardware.
+
+<br />
+Lastly, I use FP16 to save memory.
+
+<br />
+With deepspeed, you can use these options:
+
+<br />
+```
+deepspeed fastchat/train/train.py \
+    --deepspeed deepspeed.json \
+    --model_name_or_path huggyllama/llama-7b \
+    --data_path playground/data/train.json \
+    --bf16 False \
+    --fp16 True \
+    --output_dir ./output \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 4 \
+    --gradient_accumulation_steps 1 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 1200 \
+    --save_total_limit 100 \
+    --learning_rate 0.001 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --gradient_checkpointing True \
+    --logging_steps 1 \
+    --tf32 False \
+    --model_max_length 2048
+```
+
+<br />
+In the above, bf16 stands for bfloat16, which is a special type of float that has lower precision than fp16 but similar range to fp32, by adjusting which bits are allocated for the mantissa. It is not supported by pre-Ampere NVIDIA GPUs so I disabled it.
+
+<br />
+Also, I use gradient checkpointing to save memory. This is a PyTorch feature that allows you to save memory by recomputing activations during backpropagation. It's a bit slower but it's also necessary for the 7B model on lower grade hardware.
+
+<br />
+With all of the above, I see 14GB VRAM usage during training for 80 hours on 4 16GB V100s with a training set of 27k examples.
