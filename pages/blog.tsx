@@ -6,10 +6,7 @@ import path from "path";
 import matter from "gray-matter";
 import { PostMetadata } from "../components/PostTypes";
 import moment from "moment";
-import Tag from "../components/small/Tag";
 import Link from "next/link";
-import Dropdown from "../components/Dropdown";
-import MultipleSelect from "../components/MultipleSelect";
 type BlogPageProps = {
   posts: { metadata: PostMetadata; slug: string }[];
 };
@@ -50,17 +47,6 @@ function Blog(props: BlogPageProps) {
   );
   monthYears.sort().reverse();
 
-  const toggleTag = (tag: string) => {
-    const tagIndex = tags.indexOf(tag);
-    setIncludeTags([
-      ...includeTags.slice(0, tagIndex),
-      !includeTags[tagIndex],
-      ...includeTags.slice(tagIndex + 1),
-    ]);
-  };
-
-  const filterByTopic = (topic: string) => {};
-
   return (
     <div>
       <NavBar></NavBar>
@@ -68,82 +54,26 @@ function Blog(props: BlogPageProps) {
         <div className="mt-12">
           <h2>Blog</h2>
         </div>
-
-        {/*
-        <div className="mt-12 flex">
-          <MultipleSelect placeholder="By Topic" options={topics} onChange={filterByTopic} />
-          <MultipleSelect className="ml-2" placeholder="By Tag" options={topics} onChange={filterByTopic} />
-          <MultipleSelect className="ml-2" placeholder="By Year" options={topics} onChange={filterByTopic} />
-        </div>
-
         <div className="mt-12">
-          <div
-            className="md:max-w-2xl shadow-md p-8 min-w-fit"
-            style={{ minWidth: 300 }}
-          >
-            <h4>By Topic</h4>
-            <div className="mt-4">
-              {topics.map((topic, index) => (
-                <div key={index}>
-                  <label className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={includeTopics[index]}
-                      onChange={(e) => {
-                        const newIncludeTopics = [...includeTopics];
-                        newIncludeTopics[index] = e.target.checked;
-                        setIncludeTopics(newIncludeTopics);
-                      }}
-                    />
-                    <span className="ml-2">{topic}</span>
-                  </label>
+          {posts
+            .sort((a, b) =>
+              b.metadata.sortDate.localeCompare(a.metadata.sortDate)
+            )
+            .map((post) => {
+              return (
+                <div className="text-xl" key={post.slug}>
+                  <Link
+                    href={`/${post.slug.replace("mdx/", "")}`}
+                    passHref={true}
+                    key={post.slug}
+                  >
+                    <span className="ml-8 mt-4 inline-block transition ease-in-out hover:opacity-50 duration-1 cursor-pointer">
+                      <b>-</b> {post.metadata.title}
+                    </span>
+                  </Link>
                 </div>
-              ))}
-            </div>
-            <br />
-
-            <br />
-            <h4>By Tag</h4>
-            <div className="mt-4">
-              {tags.map((tag, index) => (
-                <Tag
-                  className="mr-2"
-                  isSelected={includeTags[index]}
-                  onClick={toggleTag}
-                  key={index}
-                  text={tag}
-                ></Tag>
-              ))}
-            </div>
-              </div>*/}
-        <div className="mt-12">
-          {monthYears.map((monthYear) => {
-            const postsForMonth = posts.filter(
-              (x) =>
-                x.metadata.sortDate.split("-").slice(0, 2).join("-") ===
-                monthYear
-            );
-            return (
-              <div key={monthYear} className="flex flex-col mb-10">
-                <h4>{moment(monthYear, "YYYY-MM").format("MMMM, YYYY")}</h4>
-                {postsForMonth.map((post) => {
-                  return (
-                    <div className="inline" key={post.slug}>
-                      <Link
-                        href={`/${post.slug.replace("mdx/", "")}`}
-                        passHref={true}
-                        key={post.slug}
-                      >
-                        <span className="ml-8 mt-4 inline-block transition ease-in-out hover:-translate-y-1 duration-1 cursor-pointer">
-                          <b>-</b> {post.metadata.title}
-                        </span>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </div>

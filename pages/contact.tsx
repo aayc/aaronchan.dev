@@ -19,7 +19,7 @@ export default function Contact() {
       message.length === 0 ||
       subject.length === 0
     ) {
-      alert("Please fill out all forms");
+      alert("Please fill out all fields");
       setLoading(false);
       return;
     }
@@ -101,9 +101,9 @@ export default function Contact() {
               placeholder="Message"
             />
             <br />
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-center">
               <button
-                className="transition duration-100 ease-in bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg"
+                className="transition duration-100 ease-in bg-black hover:bg-gray-800 text-white font-bold py-2 w-full rounded-lg"
                 disabled={loading}
                 onClick={handleSubmit}
               >

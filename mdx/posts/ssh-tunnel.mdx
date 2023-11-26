@@ -11,14 +11,17 @@ tags: ["ssh"]
 ---
 
 Suppose you're writing a server on a remote machine that you've logged into via ssh.
+<br />
 
 On your remote machine, you start your server and see that the terminal confirms it's running on localhost:3030, but you can't see it by going to localhost:3030 on your local machine's browser. This is because your server is accessible through localhost on the remote machine, not your local machine's localhost. Thus, you need to forward the port to your local machine.
+<br />
 
 You can do that by running the following command on your local machine:
+<br />
 
 ```bash
 ssh -L 9090:localhost:3030 <username>@<remote-machine>
 ```
-
+<br />
 This will forward the 9090 port on your local machine to the remote machine's port 3030. Now, you can access the server by going to localhost:9090 on your local machine's browser.
 
