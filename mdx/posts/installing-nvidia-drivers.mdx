@@ -1,0 +1,55 @@
+---
+title: Installing NVIDIA drivers on Ubuntu
+date: November 29, 2023
+author: Aaron Chan
+description: ""
+sortDate: "2023-11-29"
+level: 1
+topic: installations
+id: nvidia-drivers
+thumbnailUrl: "/javascript-functions-thumbnail.jpeg"
+tags: ["installations"]
+---
+
+Finally writing this down. To install NVIDIA drivers on a new Ubuntu machine, first get the `ubuntu-drivers` package:
+<br />
+```bash
+sudo apt install ubuntu-drivers-common
+```
+
+Then, run the following command to get a list of available drivers:
+<br />
+```bash
+ubuntu-drivers devices
+```
+
+You should see something like this:
+<br />
+```bash
+== /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 ==
+modalias : pci:v000010DEd00001C03sv00001028sd0000086Bbc03sc00i00
+vendor   : NVIDIA Corporation
+model    : GP106M [GeForce GTX 1060 Mobile]
+driver   : nvidia-driver-390 - distro non-free recommended
+driver   : nvidia-driver-418 - distro non-free
+driver   : nvidia-driver-430 - distro non-free
+driver   : nvidia-driver-435 - distro non-free
+```
+
+Then, install the driver you want (generally the recommended one):
+
+```bash
+sudo apt install nvidia-driver-390
+```
+
+Then, reboot your machine:
+
+```bash
+sudo reboot
+```
+
+After rebooting, you can check that the driver is installed by running:
+
+```bash
+nvidia-smi
+```
