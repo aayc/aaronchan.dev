@@ -1,0 +1,37 @@
+---
+title: Sparse git clone and checkout
+date: November 29, 2023
+author: Aaron Chan
+description: ""
+sortDate: "2023-11-29"
+level: 1
+topic: installations
+id: nvidia-drivers
+thumbnailUrl: "/javascript-functions-thumbnail.jpeg"
+tags: ["installations"]
+---
+
+Since `git` version 1.7.0, you can use the `sparse-checkout` feature to clone only a subset of a repository. This is useful when you only need a specific directory or file from a large repository, or, for example, if your repository can be your adaptive dataset.
+
+For example, you might execute a sparse checkout like this:
+
+```bash
+git clone --no-checkout --filter=blob:none <YOUR_REPO>
+cd <YOUR_REPO>
+git sparse-checkout init --cone
+git checkout main
+```
+
+The combination of `--no-checkout` and `--filter=blob:none` ensures that your initial clone is lightweight even while the repo size grows.
+
+The `--cone` option only checks out the top-level directory of the repository. If you want to check out a specific directory, you can use the `add` command:
+
+```bash
+git sparse-checkout add <YOUR_DIRECTORY>
+```
+
+You can also use the `set` command to specify a list of directories to check out (this will overwrite the current sparse-checkout list):
+
+```bash
+git sparse-checkout set <YOUR_DIRECTORY_1> <YOUR_DIRECTORY_2> <YOUR_DIRECTORY_3>
+```
