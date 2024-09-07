@@ -54,7 +54,7 @@ const Home = (props: HomePageProps) => {
             <div className="flex justify-center">
               <Image
                 className="rounded-full"
-                src={"/profile2.jpeg"}
+                src={"/profile3.jpeg"}
                 alt={"Picture of Aaron Chan"}
                 width={200}
                 height={200}
