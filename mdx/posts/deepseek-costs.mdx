@@ -1,0 +1,76 @@
+---
+title: Estimating Training Costs
+date: February 2nd, 2025
+author: Aaron Chan
+description: ""
+sortDate: "2025-02-02"
+level: 1
+topic: Machine Learning
+id: deepseek_costs
+tags: ["machine learning"]
+---
+## Parameters, Tokens, and FLOPs
+
+- Parameters: The "brain cells" of the model. Llama 3 has 405B parameters and is a dense model, meaning that each parameter is used in every token's computation. In contrast, Deepseek V3 uses Mixture of Experts (MoE), where only 37B parameters are active per token (despite 671B total).
+- Tokens: Chunks of text the model learns from (e.g., "cat" = 1 token).
+- FLOPs: Floating-point operations per second.
+
+The main operation in model training/inference is the multiply-accumulate operation, which takes in two numbers and outputs their product plus the result of a previous multiply-accumulate operation.
+<br />
+We can assume that 1 MAC is roughly equivalent to 1 FLOP, so roughly speaking, every token processed requires 6 FLOP per parameter:
+- Forward pass: 1 MAC (predict the next token).
+- Backward pass: 2 MACs (calculate gradients with respect to the intermediate activations **and** the parameters).
+- Updating weights: 3 MACs (typically 25% - 100% of the forward/backward MACs).
+
+Total FLOPs = 6 MACs/parameter/token.
+<br />
+
+The total computational cost in FLOPs is then given by:
+<br />
+```
+6 * number of parameters * number of tokens
+```
+<br />
+
+We can then convert this to "GPU hours" by dividing by the number of FLOPs per second for a given GPU, and calculating dollars by multiplying by the cost of the GPU hour.
+<br />
+
+```
+NVIDIA H100 GPU = ~1e15 FLOPs/second.
+1 H100 GPU hour = $3.50
+Total Cost ≈ (6 * number of parameters * number of tokens) / 1e15 * $3.50
+```
+
+## Llama 3 405B
+
+Formula: 6 FLOPs × 405B params × 15T tokens
+
+<br />
+```
+6 × 405B × 15T = 3.6 × 10^25 FLOPs
+Total compute time: 3.6e25 / 1e15 = 36 billion seconds ≈ 10 million H100 hours.
+Total cost ≈ (6 * 405B * 15T) / 1e15 * $3.50 = $35M (assuming $3.50/H100 hour)
+```
+<br />
+
+Meta’s reported training took ~30 million H100 hours, likely due to real-world inefficiencies: communication overhead, downtime, and imperfect parallelization.
+## Deepseek V3
+Deepseek V3 uses Mixture of Experts (MoE), a smart architecture where only 37B parameters are active per token (despite 671B total). This means we plug in only 37B parameters per token, rather than 671B.
+<br />
+Formula: 6 FLOPs × 37B active params × 15T tokens
+<br />
+```
+6 × 37B × 15T = 3.3 × 10^24 FLOPs
+Total compute time: 3.3e24 / 1e15 = 330 million seconds ≈ 0.9 million H100 hours.
+Total cost ≈ (6 * 37B * 15T) / 1e15 * $3.50 = $3.5M (assuming $3.50/H100 hour)
+```
+<br />
+
+One more thing to note: Deepseek used H800 GPUs (60-70% as fast as H100s). Adjusting for that:
+<br />
+```
+Actual compute: ~1.5 million H800 hours.
+Cost: At $2/hour for H800s, that’s $3 million.
+```
+<br />
+Consider a 2x buffer for training inefficiencies, and the total is ~$6 million, in the same ballpark as the 5.5M figure reported in the paper.
