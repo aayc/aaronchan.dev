@@ -7,6 +7,8 @@ import matter from "gray-matter";
 import { PostMetadata } from "../components/PostTypes";
 import moment from "moment";
 import Link from "next/link";
+import mixpanelTracker from "../utils/mixpanel";
+
 type BlogPageProps = {
   posts: { metadata: PostMetadata; slug: string }[];
 };
@@ -47,6 +49,13 @@ function Blog(props: BlogPageProps) {
   );
   monthYears.sort().reverse();
 
+  const handlePostClick = (postTitle: string, postSlug: string) => {
+    mixpanelTracker.trackAction("Blog Post Click", {
+      title: postTitle,
+      slug: postSlug
+    });
+  };
+
   return (
     <div>
       <NavBar></NavBar>
@@ -67,7 +76,10 @@ function Blog(props: BlogPageProps) {
                     passHref={true}
                     key={post.slug}
                   >
-                    <span className="ml-8 mt-4 inline-block transition ease-in-out hover:opacity-50 duration-1 cursor-pointer">
+                    <span 
+                      className="ml-8 mt-4 inline-block transition ease-in-out hover:opacity-50 duration-1 cursor-pointer"
+                      onClick={() => handlePostClick(post.metadata.title, post.slug)}
+                    >
                       <b>-</b> {post.metadata.title}
                     </span>
                   </Link>

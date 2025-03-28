@@ -8,14 +8,12 @@ import { PostMetadata } from "../components/PostTypes";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperPlane,
   faSquareArrowUpRight,
-  faArrowUpRightDots,
 } from "@fortawesome/free-solid-svg-icons";
-import { MotionConfig } from "framer-motion";
 import { AnimateUpReveal } from "../components/animations/AnimationToolkit";
 import Link from "next/link";
 import Footer from "../components/Footer";
+import mixpanelTracker from "../utils/mixpanel";
 
 type ProjectsProps = {
   projects: { metadata: PostMetadata; slug: string }[];
@@ -33,6 +31,13 @@ function Projects(props: ProjectsProps) {
   const [isHovering, setIsHovering] = useState(
     props.projects.map((_) => false)
   );
+
+  const handleProjectClick = (projectTitle: string, projectSlug: string) => {
+    mixpanelTracker.trackAction("Project Click", {
+      title: projectTitle,
+      slug: projectSlug
+    });
+  };
 
   return (
     <div>
@@ -58,7 +63,10 @@ function Projects(props: ProjectsProps) {
                   }}
                 >
                   <Link href={project.slug.replace("mdx/", "")}>
-                    <div className="h-full flex flex-col justify-between">
+                    <div 
+                      className="h-full flex flex-col justify-between"
+                      onClick={() => handleProjectClick(project.metadata.title, project.slug)}
+                    >
                       <span></span>
                       <AnimateUpReveal>
                         <div className="bg-black p-4 text-white flex flex-row justify-between">

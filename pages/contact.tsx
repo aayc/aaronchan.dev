@@ -2,6 +2,7 @@ import NavBar from "../components/NavBar";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import mixpanelTracker from "../utils/mixpanel";
 
 export default function Contact() {
   const [name, setName] = React.useState("");
@@ -19,10 +20,17 @@ export default function Contact() {
       message.length === 0 ||
       subject.length === 0
     ) {
+      mixpanelTracker.trackAction("Contact Form Validation Failed");
       alert("Please fill out all fields");
       setLoading(false);
       return;
     }
+
+    // Track form submission attempt
+    mixpanelTracker.trackAction("Contact Form Submit", {
+      subject_length: subject.length,
+      message_length: message.length
+    });
 
     fetch("/api/contact", {
       method: "POST",
@@ -40,6 +48,7 @@ export default function Contact() {
       .then((data) => {
         setLoading(false);
         if (data.success) {
+          mixpanelTracker.trackAction("Contact Form Success");
           alert(
             `Thanks for your message ${name}!  I'll get back to you as soon as possible.`
           );
@@ -48,6 +57,7 @@ export default function Contact() {
           setMessage("");
           setSubject("");
         } else {
+          mixpanelTracker.trackAction("Contact Form Error");
           alert(
             "Uh oh, something went wrong with sending your message.  Please try again later."
           );
