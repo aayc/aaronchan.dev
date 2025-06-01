@@ -1,19 +1,16 @@
 import Head from "next/head";
 import Image from "next/image";
 import NavBar from "../components/NavBar";
-import styles from "../styles/Home.module.css";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import SocialIcon from "../components/SocialIcon";
 import Footer from "../components/Footer";
 import {
   AnimateUpReveal,
-  TransitioningText,
 } from "../components/animations/AnimationToolkit";
-import { useInterval } from "../components/Hooks";
 import Link from "next/link";
 import { PostMetadata } from "../components/PostTypes";
 
@@ -44,13 +41,13 @@ const Home = (props: HomePageProps) => {
         {/*<link rel="icon" href="/favicon.ico" />*/}
       </Head>
 
-      <AnimateUpReveal>
+      <AnimateUpReveal duration={0.5}>
         <NavBar></NavBar>
       </AnimateUpReveal>
 
       <div className="mt-20">
         <div className="px-4 md:px-0">
-          <AnimateUpReveal>
+          <AnimateUpReveal duration={0.5}>
             <div className="flex justify-center">
               <Image
                 className="rounded-full"
@@ -64,30 +61,36 @@ const Home = (props: HomePageProps) => {
           <div className="flex justify-center m-auto py-12">
             <div className="">
               <div className="flex justify-center">
-                <AnimateUpReveal delay={0.5}>
+                <AnimateUpReveal delay={0.2} duration={0.5}>
                   <hr className="w-6 h-1 mr-3 mb-6 bg-black text-black"></hr>
                 </AnimateUpReveal>
               </div>
-              <AnimateUpReveal delay={0.7}>
-                <p className="max-w-lg text-lg">
-                  Hi! My name is Aaron Chan, and I&rsquo;m all about software
-                  engineering, machine learning, travel, performing and
-                  appreciating music, cooking, and learning new things.
-                </p>
-                <br />
-                <p className="max-w-lg text-lg">
-                  I&rsquo;m building AI models and engineering platforms with
-                  Microsoft Research to improve developer experiences all around
-                  the world. In my spare time, I enjoy playing piano and
-                  arranging music, trying new recipes, practicing jiu jitsu, and
-                  traveling.
-                </p>
-                <AnimatePresence>
+              <div className="ml-8">
+                <AnimateUpReveal delay={0.2} duration={0.5}>
+                  <p className="max-w-lg text-lg">
+                    Hi! My name is Aaron Chan, and I&rsquo;m all about machine learning
+                    and software engineering, travel, performing and
+                    appreciating music, and learning new things.
+                  </p>
+                  <br />
+                  <p className="max-w-lg text-lg">
+                    Currently I&rsquo;m on applied research at Harvey, where I
+                    helped create the source citation engine and develop
+                    algorithms for sophisticated legal research tasks such as
+                    antitrust filings and full document drafting.
+                  </p>
+                  <br />
+                  <p className="max-w-lg text-lg">
+                    Previously, I built AI models and engineering platforms for Github
+                    Copilot as part of Microsoft Research. In my spare time, I enjoy
+                    playing piano and arranging music, practicing photography, and
+                    traveling.
+                  </p>
                   {showFunFacts && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ duration: 2 }}
+                      transition={{ duration: 0.5 }}
                       exit={{ opacity: 0 }}
                     >
                       <p className="max-w-lg text-lg mt-8">
@@ -111,35 +114,35 @@ const Home = (props: HomePageProps) => {
                       </p>
                     </motion.div>
                   )}
-                </AnimatePresence>
+                  <br />
+                </AnimateUpReveal>
                 <br />
-              </AnimateUpReveal>
-              <br />
-              <AnimateUpReveal delay={1}>
-                <div className="flex flex-col md:flex-row mt-3">
-                  <p className="max-w-lg pr-2 mt-1 text-lg">
-                    Check out what I&rsquo;ve been up to 👉
-                  </p>
-                  <div className="mt-4 md:mt-0">
-                    <SocialIcon
-                      href="https://github.com/aayc"
-                      icon="github"
-                    ></SocialIcon>
-                    <SocialIcon
-                      href="https://twitter.com/aaronychan"
-                      icon="twitter"
-                    ></SocialIcon>
-                    <SocialIcon
-                      href="https://linkedin.com/in/aaron-y-chan"
-                      icon="linkedin"
-                    ></SocialIcon>
-                    <SocialIcon
-                      href="https://instagram.com/aaronychan"
-                      icon="instagram"
-                    ></SocialIcon>
+                <AnimateUpReveal delay={1} duration={0.5}>
+                  <div className="flex flex-col md:flex-row mt-3">
+                    <p className="max-w-lg pr-2 mt-1 text-lg">
+                      Check out what I&rsquo;ve been up to 👉
+                    </p>
+                    <div className="mt-4 md:mt-0">
+                      <SocialIcon
+                        href="https://github.com/aayc"
+                        icon="github"
+                      ></SocialIcon>
+                      <SocialIcon
+                        href="https://twitter.com/aaronychan"
+                        icon="twitter"
+                      ></SocialIcon>
+                      <SocialIcon
+                        href="https://linkedin.com/in/aaron-y-chan"
+                        icon="linkedin"
+                      ></SocialIcon>
+                      <SocialIcon
+                        href="https://instagram.com/aaronychan"
+                        icon="instagram"
+                      ></SocialIcon>
+                    </div>
                   </div>
-                </div>
-              </AnimateUpReveal>
+                </AnimateUpReveal>
+              </div>
             </div>
           </div>
         </div>
