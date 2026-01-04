@@ -458,8 +458,7 @@ const code = 'highlighted';
           <button
             onClick={() => {
               sessionStorage.removeItem("adminPassword");
-              setIsAuthenticated(false);
-              setPassword("");
+              window.location.href = "/";
             }}
             className="text-sm text-muted hover:text-text transition-colors"
           >
