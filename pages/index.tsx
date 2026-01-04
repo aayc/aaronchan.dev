@@ -21,18 +21,26 @@ const Home = () => {
           </h1>
           
           <p className="mt-6 text-lg text-muted leading-relaxed max-w-lg">
-            Research engineering at Cursor, focusing on RL for the{" "}
+            Research engineering at Cursor on the{" "}
             <a 
               href="https://cursor.com/blog/composer" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-text underline decoration-neutral-300 underline-offset-2 hover:decoration-neutral-500 transition-colors"
+              className="text-text underline decoration-stone-300 underline-offset-2 hover:decoration-stone-500 transition-colors"
             >
               Composer model series
             </a>.
           </p>
           <p className="mt-4 text-lg text-muted leading-relaxed max-w-lg">
-            Previously built AI systems for legal work at Harvey, and developed AI models for bug detection at Microsoft Research.
+            Previously built AI systems for legal work at{" "}
+            <a
+              href="https://harvey.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text underline decoration-stone-300 underline-offset-2 hover:decoration-stone-500 transition-colors"
+            >
+              Harvey
+            </a>, and developed AI models for bug detection at Microsoft Research.
           </p>
 
           <div className="mt-12 flex items-center gap-1">
@@ -46,7 +54,7 @@ const Home = () => {
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h6v6h6v10H6z"/>
                 <path d="M8 12h8v2H8zm0 4h8v2H8z"/>
               </svg>
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-heading bg-neutral-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-heading bg-stone-700 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                 Resume
               </span>
             </a>

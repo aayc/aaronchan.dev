@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #fafafa;
-  --color-text: #171717;
-  --color-text-muted: #737373;
-  --color-accent: #171717;
-  --color-border: #d4d4d4;
+  --color-bg: #f4ebe0;
+  --color-text: #3a3330;
+  --color-text-muted: #594f45;
+  --color-accent: #3a3330;
+  --color-border: #d4c9bb;
   --font-heading: var(--font-sora), system-ui, sans-serif;
   --font-serif: var(--font-body), Georgia, serif;
 }
@@ -79,7 +79,7 @@ a:hover {
 code {
   font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.875em;
-  background-color: #f5f5f5;
+  background-color: #e8dfd2;
   padding: 0.15em 0.35em;
   border-radius: 3px;
 }
