@@ -23,7 +23,8 @@ export default function SocialIcon({ href, icon }: SocialIconProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center justify-center w-10 h-10 text-muted hover:text-text transition-colors duration-150"
+      className="social-icon"
+      aria-label={icon}
     >
       <FontAwesomeIcon icon={iconMap[icon]} className="w-5 h-5" />
     </a>
