@@ -4,52 +4,28 @@ import {
   faGithub,
   faLinkedin,
   faTwitter,
-  faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 
 type SocialIconProps = {
   href: string;
-  className?: string;
-  icon: "github" | "linkedin" | "twitter" | "instagram";
+  icon: "github" | "linkedin" | "twitter";
 };
 
-export default function SocialIcon(props: SocialIconProps) {
-  const iconToUse =
-    props.icon === "github"
-      ? faGithub
-      : props.icon === "linkedin"
-      ? faLinkedin
-      : props.icon === "twitter"
-      ? faTwitter
-      : faInstagram;
-
-  const colorToUse =
-    props.icon === "github"
-      ? "text-gray-600"
-      : props.icon === "linkedin"
-      ? "text-blue-700"
-      : props.icon === "twitter"
-      ? "text-blue-400"
-      : "text-gray-600";
-
-  const hoverColorToUse =
-    props.icon === "github"
-      ? "hover:text-black"
-      : props.icon === "linkedin"
-      ? "hover:text-blue-800"
-      : props.icon === "twitter"
-      ? "hover:text-blue-500"
-      : "hover:text-black";
+export default function SocialIcon({ href, icon }: SocialIconProps) {
+  const iconMap = {
+    github: faGithub,
+    linkedin: faLinkedin,
+    twitter: faTwitter,
+  };
 
   return (
-    <div className={`pb-2 inline-block ${props.className ?? ""}`}>
-      <a href={props.href}>
-        <FontAwesomeIcon
-          className={`rounded-full w-12 h-16 cursor-pointer transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 ${colorToUse} ${hoverColorToUse}`}
-          icon={iconToUse}
-          size={"2x"}
-        />
-      </a>
-    </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center justify-center w-10 h-10 text-muted hover:text-text transition-colors duration-150"
+    >
+      <FontAwesomeIcon icon={iconMap[icon]} className="w-5 h-5" />
+    </a>
   );
 }
