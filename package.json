@@ -23,7 +23,9 @@
     "next-mdx-remote": "^5.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-syntax-highlighter": "^16.1.0"
+    "react-syntax-highlighter": "^16.1.0",
+    "sass": "^1.97.1",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@types/mixpanel-browser": "^2.54.0",

@@ -59,7 +59,7 @@ const ProjectPage = ({
   return (
     <div className="min-h-screen">
       <Head>
-        <title>{title} — Aaron Chan</title>
+        <title>{`${title} — Aaron Chan`}</title>
         <meta name="description" content={description || title} />
       </Head>
 

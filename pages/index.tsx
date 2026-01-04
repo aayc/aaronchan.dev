@@ -1,9 +1,25 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import SocialIcon from "../components/SocialIcon";
+import { getLatestPost, PostMeta } from "../lib/posts";
 
-const Home = () => {
+interface HomeProps {
+  latestPost: PostMeta | null;
+}
+
+export async function getStaticProps() {
+  const latestPost = getLatestPost();
+  return {
+    props: {
+      latestPost,
+    },
+    revalidate: 60,
+  };
+}
+
+const Home = ({ latestPost }: HomeProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Head>
@@ -51,6 +67,15 @@ const Home = () => {
               Harvey
             </a>, and developed AI models for bug detection at Microsoft Research.
           </p>
+
+          {latestPost && (
+            <p className="mt-6 text-base text-muted">
+              Recently wrote about{" "}
+              <Link href={`/posts/${latestPost.slug}`} className="link-accent">
+                {latestPost.title}
+              </Link>.
+            </p>
+          )}
 
           <div className="mt-8 flex items-center gap-5">
             <a

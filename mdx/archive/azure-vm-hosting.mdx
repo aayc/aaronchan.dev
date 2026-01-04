@@ -1,0 +1,99 @@
+---
+title: Self Hosting on Azure/Nginx/Vite/Vercel
+date: June 1, 2025
+author: Aaron Chan
+description: ""
+sortDate: "2025-06-01"
+level: 1
+topic: Side Projects
+id: azurevmselfhost
+thumbnailUrl: "/javascript-functions-thumbnail.jpeg"
+tags: ["side projects"]
+---
+
+I wanted a Vite/React router frontend and Python backend to host some personalized software I wrote for myself and decided to host it on an Azure VM.
+
+I jumped through some networking and reverse proxy hoops so I wanted to document my thought process here for my future self.
+
+## Frontend
+
+I threw together a fairly straightforward Vite app with React Router v7 (`react-router`, not `react-router-dom`). It's been years since I've used a
+website generator, and previously I had used NextJS. First I ensured it ran fine on my laptop, then I moved to host it on Vercel, which natively supports
+Vite apps. Vite surprised me with how fast it builds - deploying to Vercel takes a handful of seconds.
+
+I initially got tripped up by needing to provide a `vercel.json` in the project:
+
+```
+{
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
+```
+
+This is necessary because Vercel's redirection attempts to load resources from a URL directly, which sidesteps React Router and causes a 404 error.
+With this `vercel.json` configuration file, Vercel will reroute URL requests back to the root, so React Router can take over and do its job.
+
+## Backend
+
+I wrote the backend with FastAPI, and verified that FE and BE could talk to each other on my laptop. Then, I created a new Azure VM, and in Network Settings
+I enabled TCP on 8000 with priority 1000. I also installed ufw for firewall management and allowed 8000/tcp with the command `sudo ufw allow 8000/tcp`
+
+I could then run my FastAPI server and talk to it with my local frontend, but my deployed Vercel FE didn't want to talk to this rudimentary backend because
+my backend did not yet support HTTPS, and also CORS wasn't configured yet.
+
+#### Getting a free domain 
+To support HTTPS, I needed a domain. since this is just a personal project, I didn't care what the domain would be, so I obtained a free one from DuckDNS.
+I pointed it to my VM IP address, which I think is stable so long as the VM is running. 
+
+#### Installing Reverse Proxy
+I needed to make my backend more production-ready and hide the raw port :8000 from the public. I used nginx, which
+acts as a reverse proxy, forwarding incoming traffic on port 80 (or 443 for HTTPS) to my FastAPI server on port 8000.
+
+```
+sudo apt update
+sudo apt install nginx -y
+```
+
+Then, I added this block to proxy requests to the FastAPI server via /etc/nginx/sites-available/fastapi
+
+```
+server {
+    listen 80;
+    server_name yourdomain.com;  # Replace with your actual domain or use VM IP for now
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Then I enabled the site and restarted nginx:
+```
+sudo ln -s /etc/nginx/sites-available/fastapi /etc/nginx/sites-enabled/
+sudo nginx -t  # check config is valid
+sudo systemctl restart nginx
+```
+
+I ran Certbot to automatically obtain and install an SSL certificate:
+```
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d yourdomain.com
+```
+Certbot auto-detected the nginx configuration and handled certificate installation and renewal setup.
+
+Finally, I updated the firewall configuration so that only HTTPS requests would get through.
+```
+sudo ufw deny 8000/tcp
+sudo ufw allow 443/tcp
+sudo ufw status
+```
+
+I set my frontend to point to my duckdns domain on https and it worked!
