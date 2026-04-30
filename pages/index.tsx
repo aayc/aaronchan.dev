@@ -48,7 +48,7 @@ const Home = ({ latestPost }: HomeProps) => {
           <p className="mt-6 text-lg text-muted leading-relaxed max-w-lg">
             Research engineering at Cursor on the{" "}
             <a 
-              href="https://cursor.com/blog/composer" 
+              href="https://arxiv.org/abs/2603.24477"
               target="_blank" 
               rel="noopener noreferrer"
               className="link-accent"
