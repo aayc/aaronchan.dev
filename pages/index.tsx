@@ -94,7 +94,6 @@ const Home = ({ latestPost }: HomeProps) => {
             </a>
             <SocialIcon href="https://github.com/aayc" icon="github" />
             <SocialIcon href="https://linkedin.com/in/aaron-y-chan" icon="linkedin" />
-            <SocialIcon href="https://twitter.com/aaronychan" icon="twitter" />
           </div>
         </motion.div>
       </main>

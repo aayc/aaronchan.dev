@@ -11,6 +11,7 @@ import {
 // Simple password check
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "changeme";
 const POSTS_PATH = "mdx/posts";
+const EXCLUDED_POST_SLUGS = new Set(["second-post"]);
 
 function isAuthorized(req: NextApiRequest): boolean {
   const authHeader = req.headers.authorization;
@@ -151,7 +152,10 @@ export default async function handler(
           return res.status(200).json(post);
         } else {
           // Get all posts
-          const files = await listFilesFromGitHub(POSTS_PATH);
+          const files = (await listFilesFromGitHub(POSTS_PATH)).filter((filename) => {
+            const slug = filename.replace(".mdx", "");
+            return !EXCLUDED_POST_SLUGS.has(slug);
+          });
           const posts: PostMeta[] = [];
 
           for (const filename of files) {

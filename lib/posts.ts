@@ -4,6 +4,7 @@ import matter from "gray-matter";
 
 const POSTS_DIR = path.join(process.cwd(), "mdx", "posts");
 const ARCHIVE_DIR = path.join(process.cwd(), "mdx", "archive");
+const EXCLUDED_POST_SLUGS = new Set(["second-post"]);
 
 export interface PostMeta {
   title: string;
@@ -40,7 +41,10 @@ export function getAllPosts(): PostMeta[] {
     return [];
   }
   
-  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".mdx"));
+  const files = fs
+    .readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith(".mdx"))
+    .filter((f) => !EXCLUDED_POST_SLUGS.has(f.replace(".mdx", "")));
   
   const posts = files.map((filename) => {
     const slug = filename.replace(".mdx", "");

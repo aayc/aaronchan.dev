@@ -3,19 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGithub,
   faLinkedin,
-  faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 
 type SocialIconProps = {
   href: string;
-  icon: "github" | "linkedin" | "twitter";
+  icon: "github" | "linkedin";
 };
 
 export default function SocialIcon({ href, icon }: SocialIconProps) {
   const iconMap = {
     github: faGithub,
     linkedin: faLinkedin,
-    twitter: faTwitter,
   };
 
   return (

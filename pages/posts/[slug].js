@@ -9,11 +9,16 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "../../styles/Post.module.css";
 
+const EXCLUDED_POST_SLUGS = new Set(["second-post"]);
+
 function getAllPosts() {
   const postsDir = path.join(process.cwd(), "mdx", "posts");
   if (!fs.existsSync(postsDir)) return [];
 
-  const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".mdx"));
+  const files = fs
+    .readdirSync(postsDir)
+    .filter((f) => f.endsWith(".mdx"))
+    .filter((f) => !EXCLUDED_POST_SLUGS.has(f.replace(".mdx", "")));
 
   return files.map((filename) => {
     const slug = filename.replace(".mdx", "");
